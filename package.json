@@ -1,0 +1,16 @@
+{
+  "name": "ews-client-node",
+  "version": "0.0.1",
+  "description": "Node.js client for calling EFL Web Service endpoints",
+  "devDependencies": {
+    "mocha": "^3.5.0"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "axios": "^0.16.2",
+    "crypto": "^1.0.1"
+  },
+  "scripts": {
+    "test": "node test.js"
+  }
+}
