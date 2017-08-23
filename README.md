@@ -1,4 +1,4 @@
-# EFL API Authentication Demo
+# EFL Web Services Node.js Client
 Demonstrates how to authenticate to EFL Web Services in Node applications.
 
 # Install packages
