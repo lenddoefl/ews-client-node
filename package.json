@@ -20,7 +20,7 @@
     "url": "git@github.com:eflglobal/ews-client-node.git"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha --reporter spec"
   },
   "private": true
 }

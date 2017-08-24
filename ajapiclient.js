@@ -7,13 +7,13 @@ function startSession(data, APIKey, baseURL) {
     if(!auth.AJAPI) {
         return login('AJAPI', APIKey, baseURL).then(function () {
             return request(baseURL+'startSession.json', auth.AJAPI, data).then(function (response) {
-                console.log('Start Session');
-                console.log('Application hash:' + response.data.applicationHash);
-                console.log('Public Key' + response.data.publicKey)
+                return response;
             });
         });
     } else {
-        return request(baseURL+'startSession.json', auth.AJAPI, data);
+        return request(baseURL+'startSession.json', auth.AJAPI, data).then(function (response) {
+            return response;
+        });
     }
 }
 
@@ -79,6 +79,7 @@ function resumeSession(data, APIKey, baseURL) {
 
 module.exports = {
     init: ews.init,
+    login: ews.login,
     startSession: startSession,
     finishSession: finishSession,
     finishStep: finishStep,

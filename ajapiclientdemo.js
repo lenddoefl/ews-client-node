@@ -5,5 +5,8 @@ var dataForStartSession = {
     application: "sdkExample"
 };
 
-module.startSession(dataForStartSession, data.APIKey, data.URL_AJ);
-
+module.startSession(dataForStartSession, data.APIKey, data.URL_AJ).then(function (response) {
+    console.log('Application hash: ' + response.data.applicationHash);
+    console.log('Public Key: ' + response.data.publicKey);
+    console.log('UID: ' + response.data.uid);
+});

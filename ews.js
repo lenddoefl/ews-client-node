@@ -42,6 +42,7 @@ function login(clientAPI, APIKey, baseURL){
 
                 if(!!auth[clientAPI]) auth[clientAPI].reqToken = processReqToken(APIKey, auth[clientAPI]);
             }
+            return response.data;
         })
         .catch(function (error) {
             console.log('Error:', error);
@@ -102,7 +103,6 @@ function request(baseURL, tokens, data, endpoint) {
 
     return axios.post(baseURL, postData)
         .then(function (response) {
-            console.log(response.data)
             return response.data;
         })
         .catch(function (error) {
