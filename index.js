@@ -126,8 +126,8 @@ function readFile(URLfile) {
 }
 
 function init(data) {
-    var URL_AJ = data.EWSAJ_prod==true?'https://api.eflglobal.com/api/v2/applicant_journey/':'https://uat-external.eflglobal.com/api/v2/applicant_journey/';
-    var URL_Scores = data.EWSScores_prod==true?'https://api.eflglobal.com/api/v1/scores/':'https://uat-external.eflglobal.com/api/v1/scores/';
+    var URL_AJ = data.URL_AJ;
+    var URL_Scores = data.URL_Scores;
     var urlFolder = data.urlFolder;
     var APIKey = getDataFromFiles(urlFolder);
 
