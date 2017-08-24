@@ -48,6 +48,15 @@ function login(clientAPI, APIKey, baseURL){
         });
 }
 
+function init(data) {
+    var URL_AJ = data.URL_AJ;
+    var URL_Scores = data.URL_Scores;
+    var urlFolder = data.urlFolder;
+    var APIKey = getDataFromFiles(urlFolder);
+
+    return {URL_AJ: URL_AJ, URL_Scores: URL_Scores, APIKey: APIKey};
+}
+
 function processReqToken(keys, tokens) {
     var apiKeys = {
         encryptionKey: keys.encryptionKey,
@@ -93,7 +102,8 @@ function request(baseURL, tokens, data, endpoint) {
 
     return axios.post(baseURL, postData)
         .then(function (response) {
-           console.log(response.data)
+            console.log(response.data)
+            return response.data;
         })
         .catch(function (error) {
             console.log('Error:',error);
@@ -125,116 +135,13 @@ function readFile(URLfile) {
     return contentFile;
 }
 
-function init(data) {
-    var URL_AJ = data.URL_AJ;
-    var URL_Scores = data.URL_Scores;
-    var urlFolder = data.urlFolder;
-    var APIKey = getDataFromFiles(urlFolder);
-
-    return {URL_AJ: URL_AJ, URL_Scores: URL_Scores, APIKey: APIKey};
-}
-
-function startSession(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'startSession.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'startSession.json', auth.AJAPI, data);
-    }
-}
-
-function finishSession(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'finishSession.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'finishSession.json', auth.AJAPI, data);
-    }
-}
-
-function finishStep(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'finishStep.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'finishStep.json', auth.AJAPI, data);
-    }
-}
-
-function createAttachment(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'createAttachment.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'createAttachment.json', auth.AJAPI, data);
-    }
-}
-
-function getApplication(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'getApplication.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'getApplication.json', auth.AJAPI, data);
-    }
-}
-
-function prefetchApplications(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'prefetchApplications.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'prefetchApplications.json', auth.AJAPI, data);
-    }
-}
-
-function resumeSession(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'resumeSession.json', auth.AJAPI, data);
-        });
-    } else {
-        return request(baseURL+'resumeSession.json', auth.AJAPI, data);
-    }
-}
-
-function subject(data, APIKey, baseURL) {
-    var endpoint = 'subjects';
-    if(!auth.ScoresAPI) {
-        return login('ScoresAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint);
-        });
-    } else {
-        return request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint);
-    }
-}
-
-function dataQuery(data, APIKey, baseURL) {
-    var endpoint = 'dateQuery';
-    if(!auth.ScoresAPI) {
-        return login('ScoresAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'dateQuery.json?auth_type=1', auth.ScoresAPI, data, endpoint);
-        });
-    } else {
-        return request(baseURL+'dateQuery.json?auth_type=1', auth.ScoresAPI, data, endpoint);
-    }
+function getTokens() {
+    return auth;
 }
 
 module.exports = {
+    login: login,
     init: init,
-    startSession: startSession,
-    finishSession: finishSession,
-    finishStep: finishStep,
-    createAttachment: createAttachment,
-    getApplication: getApplication,
-    prefetchApplications: prefetchApplications,
-    resumeSession: resumeSession,
-    subject: subject,
-    dataQuery: dataQuery
+    request: request,
+    getTokens: getTokens,
 };

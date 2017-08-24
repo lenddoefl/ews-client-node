@@ -1,4 +1,4 @@
-var module = require('./index.js');
+var module = require('./ajapiclient.js');
 var data = module.init({URL_AJ:process.argv[2], urlFolder: process.argv[3]});
 var dataForStartSession = {
     applicant: {},
