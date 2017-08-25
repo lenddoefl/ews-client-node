@@ -39,7 +39,7 @@ Where:
 
 The demo authenticates to the Scores API and returns any subjects with ID numbers that match the query.
 
-# Run test
+# Running the test
 
 ## Test for Applicant Journey API
 ```
