@@ -7,8 +7,8 @@ describe('Scores CLient', function () {
     var data;
     before(function(){
         data = scoresModule.init({
-            URL_Scores:'https://uat-external.eflglobal.com/api/v1/scores/',
-            urlFolder: process.argv[5]});
+            URL_Scores: process.argv[5],
+            urlFolder: process.argv[6]});
     });
     describe('Call login', function () {
         it('Should come success response', function (done) {

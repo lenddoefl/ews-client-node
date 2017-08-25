@@ -8,8 +8,8 @@ describe('Applicant Journey CLient', function () {
     var uid;
     before(function () {
         data = ajModule.init({
-            URL_AJ: 'https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            urlFolder: process.argv[5]
+            URL_AJ: process.argv[5],
+            urlFolder: process.argv[6]
         });
     });
     describe('Call login', function () {
