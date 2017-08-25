@@ -4,7 +4,6 @@ var login = ews.login;
 var request = ews.request;
 
 function subject(data, APIKey, baseURL) {
-    console.log(111111)
     var endpoint = 'subjects';
     if(!auth.ScoresAPI) {
         return login('ScoresAPI', APIKey, baseURL).then(function () {
@@ -28,6 +27,7 @@ function dataQuery(data, APIKey, baseURL) {
 
 module.exports = {
     init: ews.init,
+    login: ews.login,
     subject: subject,
     dataQuery: dataQuery
 };
