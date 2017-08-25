@@ -6,7 +6,9 @@ Demonstrates how to authenticate to EFL Web Services in Node applications.
 
 # Installation
 This library is distributed on `npm`. In order to add it as a dependency, run the following command:
-```npm install ews-client-node --save```
+```
+npm install ews-client-node --save
+```
 
 # Running the Demo
 ## Applicant Journey API
@@ -37,7 +39,7 @@ Where:
 
 The demo authenticates to the Scores API and returns any subjects with ID numbers that match the query.
 
-#Run test
+# Run test
 
 ## Test for Applicant Journey API
 ```
