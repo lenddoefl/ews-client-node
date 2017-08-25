@@ -1,4 +1,4 @@
-var scoresModule = require('../scoresapiclient.js');
+var scoresModule = require('../index.js').scoresapiclient;
 var chai  = require('chai');
 var expect = chai.expect;
 

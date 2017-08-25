@@ -1,7 +1,7 @@
-var fs = require('fs');
-var crypto = require('crypto');
-var axios = require('axios');
-var admZip = require('adm-zip');
+var fs = require('fs'),
+    crypto = require('crypto'),
+    axios = require('axios'),
+    admZip = require('adm-zip');
 
 var auth = {};
 

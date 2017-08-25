@@ -1,4 +1,4 @@
-var ajModule = require('../ajapiclient.js');
+var ajModule = require('../index.js').ajapiclient;
 var chai  = require('chai');
 var expect = chai.expect;
 

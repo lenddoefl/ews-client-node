@@ -1,7 +1,7 @@
-var ews = require('./ews.js');
-var auth = ews.getTokens();
-var login = ews.login;
-var request = ews.request;
+var ews = require('./ews.js'),
+    auth = ews.getTokens(),
+    login = ews.login,
+    request = ews.request;
 
 function subject(data, APIKey, baseURL) {
     var endpoint = 'subjects';
