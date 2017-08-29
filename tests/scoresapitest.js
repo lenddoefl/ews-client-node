@@ -15,10 +15,6 @@ describe('Scores CLient', function () {
             scoresModule.login('ScoresAPI', data.APIKey, data.URL_Scores).then(function (response) {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
-                expect(response.authToken).not.to.be.null;
-                expect(response.reqToken).not.to.be.null;
-                expect(response.authToken).to.not.be.empty;
-                expect(response.reqToken).to.not.be.empty;
 
                 done();
             });
