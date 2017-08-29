@@ -180,4 +180,38 @@ describe('Applicant Journey CLient', function () {
             });
         });
     });
+
+    describe('Call resumeSession', function () {
+        it('Should come success response with status code 200, status message OK', function (done) {
+            var dataForCall = {
+                applicant: {},
+                uid: uid
+            };
+
+            ajModule.resumeSession(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+                expect(response.statusCode).to.equal(200);
+                expect(response.statusMessage).to.equal('OK');
+
+                done();
+            });
+
+        });
+    });
+
+    describe('Call prefetchApplications', function () {
+        it('Should come success response with status code 200, status message OK', function (done) {
+            var dataForCall = {
+                applications: {
+                    sdkExample: "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"
+                }
+            };
+
+            ajModule.prefetchApplications(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+                expect(response.statusCode).to.equal(200);
+                expect(response.statusMessage).to.equal('OK');
+
+                done();
+            });
+        });
+    });
 });

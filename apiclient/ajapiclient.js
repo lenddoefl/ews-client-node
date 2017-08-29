@@ -74,31 +74,19 @@ function getApplication(data, APIKey, baseURL) {
 }
 
 function prefetchApplications(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'prefetchApplications.json', auth.AJAPI, data).then(function (response) {
-                return response;
-            });
-        });
-    } else {
+    return login('AJAPI', APIKey, baseURL).then(function () {
         return request(baseURL+'prefetchApplications.json', auth.AJAPI, data).then(function (response) {
             return response;
         });
-    }
+    });
 }
 
 function resumeSession(data, APIKey, baseURL) {
-    if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'resumeSession.json', auth.AJAPI, data).then(function (response) {
-                return response;
-            });
-        });
-    } else {
+    return login('AJAPI', APIKey, baseURL).then(function () {
         return request(baseURL+'resumeSession.json', auth.AJAPI, data).then(function (response) {
             return response;
         });
-    }
+    });
 }
 
 module.exports = {

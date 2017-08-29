@@ -7,12 +7,12 @@ function subject(data, APIKey, baseURL) {
     var endpoint = 'subjects';
     if(!auth.ScoresAPI) {
         return login('ScoresAPI', APIKey, baseURL).then(function () {
-            return  request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
+            return request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
                 return response;
             });
         });
     } else {
-        return  request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
+        return request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
             return response;
         });
     }
