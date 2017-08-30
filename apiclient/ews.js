@@ -5,16 +5,16 @@ var fs = require('fs'),
 
 var auth = {};
 
-function login(clientAPI, APIKey, baseURL){
-    var url = clientAPI==='AJAPI'?baseURL+'login.json':baseURL+'login.json?auth_type=1';
+function login(clientAPI, APIKey, hostname){
+    const url = generateURI(hostname, clientAPI, 'login');
 
     return axios.post(url, {identifier: APIKey.identifier})
         .then(function (response) {
             if(response.data.statusCode===200&&response.data.statusMessage==='OK'
                 ||response.data.status===1&&response.data.statusMessage==='Success') {
 
-                var authToken, reqToken;
-                var errorGettingTokens = 'Error getting tokens. These values are null.';
+                let authToken, reqToken;
+                const errorGettingTokens = 'Error getting tokens. These values are null.';
 
                 if(clientAPI==='ScoresAPI') {
                     authToken = response.data.authToken;
@@ -50,51 +50,51 @@ function login(clientAPI, APIKey, baseURL){
 }
 
 function init(data) {
-    var URL_AJ = data.URL_AJ;
-    var URL_Scores = data.URL_Scores;
-    var urlFolder = data.urlFolder;
-    var APIKey = getDataFromFiles(urlFolder);
+    let hostname_AJ = data.hostname_AJ;
+    let hostname_Scores = data.hostname_Scores;
+    let urlFolder = data.urlFolder;
+    let APIKey = getDataFromFiles(urlFolder);
 
-    return {URL_AJ: URL_AJ, URL_Scores: URL_Scores, APIKey: APIKey};
+    return {hostname_AJ: hostname_AJ, hostname_Scores: hostname_Scores, APIKey: APIKey};
 }
 
 function processReqToken(keys, tokens) {
-    var apiKeys = {
+    let apiKeys = {
         encryptionKey: keys.encryptionKey,
         decryptionKey: keys.decryptionKey
     };
 
-    var decrypted = decryptText("aes-128-cbc", apiKeys.decryptionKey, new Buffer(tokens.authToken,'base64'), tokens.reqToken, "base64");
-    var reEncrypted = encryptText("aes-128-cbc", apiKeys.encryptionKey,  new Buffer(tokens.authToken,'base64'), decrypted, "base64");
+    let decrypted = decryptText("aes-128-cbc", apiKeys.decryptionKey, new Buffer(tokens.authToken,'base64'), tokens.reqToken, "base64");
+    let reEncrypted = encryptText("aes-128-cbc", apiKeys.encryptionKey,  new Buffer(tokens.authToken,'base64'), decrypted, "base64");
 
     return reEncrypted;
 }
 
 function encryptText(cipher_alg, key, iv, text, encoding) {
 
-    var cipher = crypto.createCipheriv(cipher_alg, key, iv);
+    let cipher = crypto.createCipheriv(cipher_alg, key, iv);
 
     encoding = encoding || "binary";
 
-    var result = cipher.update(text, "utf8", encoding);
+    let result = cipher.update(text, "utf8", encoding);
     result += cipher.final(encoding);
 
     return result;
 }
 
 function decryptText(cipher_alg, key, iv, text, encoding) {
-    var decipher = crypto.createDecipheriv(cipher_alg, key, iv);
+    let decipher = crypto.createDecipheriv(cipher_alg, key, iv);
 
     encoding = encoding || "binary";
 
-    var result = decipher.update(text, encoding);
+    let result = decipher.update(text, encoding);
     result += decipher.final();
 
     return result;
 }
 
 function request(baseURL, tokens, data, endpoint) {
-    var postData;
+    let postData;
     if(endpoint) {
         postData = {authToken: tokens.authToken, reqToken: tokens.reqToken, [endpoint]: data};
     } else {
@@ -111,17 +111,18 @@ function request(baseURL, tokens, data, endpoint) {
 }
 
 function getDataFromFiles(urlFolder) {
-    var APIKey = {};
+    let APIKey = {};
 
-    var nameFileIdentifier = 'identifier.txt';
-    var nameFileEncryption = 'encryption.key';
-    var nameFileDecryption = 'decryption.key';
+    const nameFileIdentifier = 'identifier.txt';
+    const nameFileEncryption = 'encryption.key';
+    const nameFileDecryption = 'decryption.key';
+
     if (fs.statSync(urlFolder).isDirectory()) {
-        APIKey.identifier = readFile(urlFolder +'/'+nameFileIdentifier);
-        APIKey.encryptionKey = readFile(urlFolder +'/'+nameFileEncryption);
-        APIKey.decryptionKey = readFile(urlFolder +'/'+nameFileDecryption);
+        APIKey.identifier = readFile(`${urlFolder}/${nameFileIdentifier}`);
+        APIKey.encryptionKey = readFile(`${urlFolder}/${nameFileEncryption}`);
+        APIKey.decryptionKey = readFile(`${urlFolder}/${nameFileDecryption}`);
     } else {
-        var zip = new admZip(urlFolder);
+        let zip = new admZip(urlFolder);
         APIKey.identifier = zip.readAsText(nameFileIdentifier);
         APIKey.encryptionKey = zip.readAsText(nameFileEncryption);
         APIKey.decryptionKey = zip.readAsText(nameFileDecryption);
@@ -131,7 +132,7 @@ function getDataFromFiles(urlFolder) {
 }
 
 function readFile(URLfile) {
-    var contentFile = fs.readFileSync(URLfile, 'utf8');
+    let contentFile = fs.readFileSync(URLfile, 'utf8');
     return contentFile;
 }
 
@@ -139,9 +140,21 @@ function getTokens() {
     return auth;
 }
 
+function generateURI(hostname, clientAPI, endpoint) {
+    let url;
+    if(clientAPI==='AJAPI') {
+        url = `https://${hostname}/api/v2/applicant_journey/${endpoint}.json`;
+    } else {
+        url = `https://${hostname}/api/v1/scores/${endpoint}.json?auth_type=1`;
+    }
+
+    return url;
+}
+
 module.exports = {
     login: login,
     init: init,
     request: request,
     getTokens: getTokens,
+    generateURI: generateURI
 };

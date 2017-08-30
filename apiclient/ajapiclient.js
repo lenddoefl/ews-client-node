@@ -1,89 +1,106 @@
 var ews = require('./ews.js'),
     auth = ews.getTokens(),
     login = ews.login,
-    request = ews.request;
+    request = ews.request,
+    generateURI = ews.generateURI;
 
-function startSession(data, APIKey, baseURL) {
+var clientAPI = 'AJAPI';
+
+function startSession(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'startSession');
+
     if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'startSession.json', auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.AJAPI, data).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'startSession.json', auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     }
 }
 
-function finishSession(data, APIKey, baseURL) {
+function finishSession(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'finishSession');
+
     if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'finishSession.json', auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.AJAPI, data).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'finishSession.json', auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     }
 }
 
-function finishStep(data, APIKey, baseURL) {
+function finishStep(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'finishStep');
+
     if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'finishStep.json', auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.AJAPI, data).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'finishStep.json', auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     }
 }
 
-function createAttachment(data, APIKey, baseURL) {
+function createAttachment(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'createAttachment');
+
     if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'createAttachment.json', auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.AJAPI, data).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'createAttachment.json', auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     }
 }
 
-function getApplication(data, APIKey, baseURL) {
+function getApplication(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'getApplication');
+
     if(!auth.AJAPI) {
-        return login('AJAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'getApplication.json', auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.AJAPI, data).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'getApplication.json', auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     }
 }
 
-function prefetchApplications(data, APIKey, baseURL) {
-    return login('AJAPI', APIKey, baseURL).then(function () {
-        return request(baseURL+'prefetchApplications.json', auth.AJAPI, data).then(function (response) {
+function prefetchApplications(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'prefetchApplications');
+
+    return login(clientAPI, APIKey, hostname).then(function () {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     });
 }
 
-function resumeSession(data, APIKey, baseURL) {
-    return login('AJAPI', APIKey, baseURL).then(function () {
-        return request(baseURL+'resumeSession.json', auth.AJAPI, data).then(function (response) {
+function resumeSession(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI, 'resumeSession');
+
+    return login(clientAPI, APIKey, hostname).then(function () {
+        return request(url, auth.AJAPI, data).then(function (response) {
             return response;
         });
     });

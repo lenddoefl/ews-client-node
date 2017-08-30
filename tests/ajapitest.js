@@ -1,18 +1,21 @@
-var ajModule = require('../index.js').ajapiclient;
-var chai  = require('chai');
-var expect = chai.expect;
+var ajModule = require('../index.js').ajapiclient,
+    chai  = require('chai'),
+    expect = chai.expect;
 
 describe('Applicant Journey CLient', function () {
     this.timeout(5000);
-    var uid,
+    let uid, data;
+
+    before(function() {
         data = ajModule.init({
-            URL_AJ: process.argv[5],
+            hostname_AJ: process.argv[5],
             urlFolder: process.argv[6]
         });
+    });
 
     describe('Call login', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            ajModule.login('AJAPI', data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.login('AJAPI', data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -23,11 +26,11 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call startSession', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCallStartSession = {
+            let dataForCallStartSession = {
                 applicant: {},
                 application: "sdkExample"
             };
-            ajModule.startSession(dataForCallStartSession, data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.startSession(dataForCallStartSession, data.APIKey, data.hostname_AJ).then(function (response) {
                 uid = response.data.uid;
 
                 expect(response.statusCode).to.equal(200);
@@ -40,12 +43,12 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call finishSession', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCall = {
+            let dataForCall = {
                 sequence: 0,
                 uid: uid
             };
 
-            ajModule.finishSession(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.finishSession(dataForCall, data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -56,7 +59,7 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call finishStep', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCall = {
+            let dataForCall = {
                 applicant: {},
                 device: {
                     browser: null,
@@ -80,7 +83,7 @@ describe('Applicant Journey CLient', function () {
                 uid: uid
             };
 
-            ajModule.finishStep(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.finishStep(dataForCall, data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -91,7 +94,7 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call createAttachment', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCall = {
+            let dataForCall = {
                 attachmentType: 'photo',
                 attachmentTypeVersion: '1.0',
                 contentType: 'image/jpeg',
@@ -139,7 +142,7 @@ describe('Applicant Journey CLient', function () {
                 size: 2217,
                 uid: uid
             };
-           ajModule.createAttachment(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+           ajModule.createAttachment(dataForCall, data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -150,7 +153,7 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call getApplication', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCall = {
+            let dataForCall = {
                 device: {
                     browser: null,
                     deviceId: null,
@@ -172,7 +175,7 @@ describe('Applicant Journey CLient', function () {
                 uid: uid
             };
 
-            ajModule.getApplication(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.getApplication(dataForCall, data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -183,12 +186,12 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call resumeSession', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCall = {
+            let dataForCall = {
                 applicant: {},
                 uid: uid
             };
 
-            ajModule.resumeSession(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.resumeSession(dataForCall, data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -200,13 +203,13 @@ describe('Applicant Journey CLient', function () {
 
     describe('Call prefetchApplications', function () {
         it('Should come success response with status code 200, status message OK', function (done) {
-            var dataForCall = {
+            let dataForCall = {
                 applications: {
                     sdkExample: "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"
                 }
             };
 
-            ajModule.prefetchApplications(dataForCall, data.APIKey, data.URL_AJ).then(function (response) {
+            ajModule.prefetchApplications(dataForCall, data.APIKey, data.hostname_AJ).then(function (response) {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 

@@ -1,33 +1,40 @@
 var ews = require('./ews.js'),
     auth = ews.getTokens(),
     login = ews.login,
-    request = ews.request;
+    request = ews.request,
+    generateURI = ews.generateURI;
 
-function subject(data, APIKey, baseURL) {
-    var endpoint = 'subjects';
+var clientAPI = 'ScoresAPI';
+
+function subject(data, APIKey, hostname) {
+    let endpoint = 'subjects';
+    let url = generateURI(hostname, clientAPI, 'subject');
+
     if(!auth.ScoresAPI) {
-        return login('ScoresAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'subject.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
+        return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
             return response;
         });
     }
 }
 
-function dataQuery(data, APIKey, baseURL) {
-    var endpoint = 'dateQuery';
+function dataQuery(data, APIKey, hostname) {
+    let endpoint = 'dateQuery';
+    let url = generateURI(hostname, clientAPI, endpoint);
+
     if(!auth.ScoresAPI) {
-        return login('ScoresAPI', APIKey, baseURL).then(function () {
-            return request(baseURL+'dateQuery.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(function () {
+            return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
                 return response;
             });
         });
     } else {
-        return request(baseURL+'dateQuery.json?auth_type=1', auth.ScoresAPI, data, endpoint).then(function (response) {
+        return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
             return response;
         });
     }
