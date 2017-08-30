@@ -5,7 +5,7 @@ var fs = require('fs'),
 
 var auth = {};
 
-function login(clientAPI, APIKey, hostname){
+function login(clientAPI, APIKey, hostname) {
     const url = generateURI(hostname, clientAPI, 'login');
 
     return axios.post(url, {identifier: APIKey.identifier})
@@ -41,8 +41,9 @@ function login(clientAPI, APIKey, hostname){
                 }
 
                 if(!!auth[clientAPI]) auth[clientAPI].reqToken = processReqToken(APIKey, auth[clientAPI]);
+
+                return response.data;
             }
-            return response.data;
         })
         .catch(function (error) {
             console.log('Error:', error);
