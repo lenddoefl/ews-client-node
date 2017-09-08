@@ -14,12 +14,11 @@ npm install ews-client-node --save
 ## Applicant Journey API
 
 ```
-# Run the Demo
-node <nameFileDemo> <hostname> <pathToApiKey>
+# Run the AJ API Client Demo
+node demos/ajapiclientdemo.js <hostname> <pathToApiKey>
 ```
 Where:
 
-- `<nameFileDemo>` is the name of the file to run ApplicantJourneyClient demo (e.g., `ajapiclientdemo.js`).
 - `hostname` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
@@ -28,12 +27,11 @@ The demo authenticates to the Applicant Journey API and starts a new session.
 ## Scores API
 
 ```
-# Run the Demo
-node <nameFileDemo> <hostname> <pathToApiKey>
+# Run the Scores API Client Demo
+node demos/scoresapiclientdemo.js <hostname> <pathToApiKey>
 ```
 Where:
 
-- `<nameFileDemo>` is the name of the file to run ScoresClient demo (e.g., `scoresapiclientdemo.js`).
 - `hostname` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
