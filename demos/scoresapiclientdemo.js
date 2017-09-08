@@ -1,8 +1,8 @@
 var module = require('../index.js'),
     scoresModule = module.scoresapiclient;
 
-var data = scoresModule.init({hostname_Scores:process.argv[2], urlFolder: process.argv[3]});
-var dataForSubject = [
+let data = scoresModule.init({hostname_Scores:process.argv[2], urlFolder: process.argv[3]}),
+    dataForSubject = [
     {
         "identification": [
             {
@@ -11,8 +11,17 @@ var dataForSubject = [
             }
         ]
     }
-];
+    ],
+    dataForDataQuery = "2017-08-24 00:00:00";
+
+scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(function (response) {
+    console.log('Response calling login', response);
+});
 
 scoresModule.subject(dataForSubject, data.APIKey, data.hostname_Scores).then(function(response){
-    console.log('Response', response);
+    console.log('Response calling subject', response);
+});
+
+scoresModule.dataQuery(dataForDataQuery, data.APIKey, data.hostname_Scores).then(function(response) {
+    console.log('Response calling dataQuery', response);
 });
