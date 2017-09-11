@@ -11,13 +11,13 @@ function subject(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'subject');
 
     if(!auth.ScoresAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.ScoresAPI, data, endpoint).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
+        return request(url, auth.ScoresAPI, data, endpoint).then(response => {
             return response;
         });
     }
@@ -28,13 +28,13 @@ function dataQuery(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, endpoint);
 
     if(!auth.ScoresAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.ScoresAPI, data, endpoint).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.ScoresAPI, data, endpoint).then(function (response) {
+        return request(url, auth.ScoresAPI, data, endpoint).then(response => {
             return response;
         });
     }

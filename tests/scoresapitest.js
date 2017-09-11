@@ -3,7 +3,7 @@ var scoresModule = require('../index.js').scoresapiclient,
     expect = chai.expect,
     fs = require('fs');
 
-describe('Scores CLient', function () {
+describe('Scores CLient', () => {
     this.timeout(5000);
     let data,
         argv = require('optimist').demand('config').argv,
@@ -22,9 +22,9 @@ describe('Scores CLient', function () {
         fs.unlinkSync(configFilePath);
     });
 
-    describe('Call login', function () {
-        it('Should come success response with status 1, status message Success', function (done) {
-            scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(function (response) {
+    describe('Call login', () => {
+        it('Should come success response with status 1, status message Success', done => {
+            scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 
@@ -33,8 +33,8 @@ describe('Scores CLient', function () {
         });
     });
 
-    describe('Call subject', function () {
-        it('Should come success response with status 1, status message Success', function(done){
+    describe('Call subject', () => {
+        it('Should come success response with status 1, status message Success', done => {
             let dataForCall = [
                 {
                     "identification": [
@@ -46,7 +46,7 @@ describe('Scores CLient', function () {
                 }
             ];
 
-            scoresModule.subject(dataForCall, data.APIKey, data.hostname_Scores).then(function(response) {
+            scoresModule.subject(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 
@@ -55,11 +55,11 @@ describe('Scores CLient', function () {
         });
     });
 
-    describe('Call dataQuery', function () {
-        it('Should come success response with status 1, status message Success', function(done){
+    describe('Call dataQuery', () => {
+        it('Should come success response with status 1, status message Success', done => {
             let dataForCall = "2017-08-24 00:00:00";
 
-            scoresModule.dataQuery(dataForCall, data.APIKey, data.hostname_Scores).then(function(response) {
+            scoresModule.dataQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 

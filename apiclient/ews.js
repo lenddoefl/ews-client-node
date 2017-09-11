@@ -9,7 +9,7 @@ function login(clientAPI, APIKey, hostname) {
     const url = generateURI(hostname, clientAPI, 'login');
 
     return axios.post(url, {identifier: APIKey.identifier})
-        .then(function (response) {
+        .then(response => {
             if(response.data.statusCode===200&&response.data.statusMessage==='OK'
                 ||response.data.status===1&&response.data.statusMessage==='Success') {
 
@@ -45,7 +45,7 @@ function login(clientAPI, APIKey, hostname) {
                 return response.data;
             }
         })
-        .catch(function (error) {
+        .catch(error => {
             console.log('Error:', error);
         });
 }
@@ -103,10 +103,10 @@ function request(baseURL, tokens, data, endpoint) {
     }
 
     return axios.post(baseURL, postData)
-        .then(function (response) {
+        .then(response => {
             return response.data;
         })
-        .catch(function (error) {
+        .catch(error => {
             console.log('Error:',error);
         });
 }

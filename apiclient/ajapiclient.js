@@ -10,13 +10,13 @@ function startSession(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'startSession');
 
     if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.AJAPI, data).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     }
@@ -26,13 +26,13 @@ function finishSession(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'finishSession');
 
     if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.AJAPI, data).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     }
@@ -42,13 +42,13 @@ function finishStep(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'finishStep');
 
     if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.AJAPI, data).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     }
@@ -58,13 +58,13 @@ function createAttachment(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'createAttachment');
 
     if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.AJAPI, data).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     }
@@ -74,13 +74,13 @@ function getApplication(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'getApplication');
 
     if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(function () {
-            return request(url, auth.AJAPI, data).then(function (response) {
+        return login(clientAPI, APIKey, hostname).then(() => {
+            return request(url, auth.AJAPI, data).then(response => {
                 return response;
             });
         });
     } else {
-        return request(url, auth.AJAPI, data).then(function (response) {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     }
@@ -89,8 +89,8 @@ function getApplication(data, APIKey, hostname) {
 function prefetchApplications(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'prefetchApplications');
 
-    return login(clientAPI, APIKey, hostname).then(function () {
-        return request(url, auth.AJAPI, data).then(function (response) {
+    return login(clientAPI, APIKey, hostname).then(() => {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     });
@@ -99,8 +99,8 @@ function prefetchApplications(data, APIKey, hostname) {
 function resumeSession(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI, 'resumeSession');
 
-    return login(clientAPI, APIKey, hostname).then(function () {
-        return request(url, auth.AJAPI, data).then(function (response) {
+    return login(clientAPI, APIKey, hostname).then(() => {
+        return request(url, auth.AJAPI, data).then(response => {
             return response;
         });
     });
