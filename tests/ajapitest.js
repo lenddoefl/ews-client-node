@@ -3,7 +3,7 @@ var ajModule = require('../index.js').ajapiclient,
     expect = chai.expect,
     fs = require('fs');
 
-describe('Applicant Journey CLient', () => {
+describe('Applicant Journey CLient', function() {
     this.timeout(5000);
     let uid, data,
         argv = require('optimist').demand('config').argv,

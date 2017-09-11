@@ -3,7 +3,7 @@ var scoresModule = require('../index.js').scoresapiclient,
     expect = chai.expect,
     fs = require('fs');
 
-describe('Scores CLient', () => {
+describe('Scores CLient', function () {
     this.timeout(5000);
     let data,
         argv = require('optimist').demand('config').argv,
