@@ -1,16 +1,27 @@
 var scoresModule = require('../index.js').scoresapiclient,
     chai  = require('chai'),
-    expect = chai.expect;
+    expect = chai.expect,
+    fs = require('fs');
 
 describe('Scores CLient', function () {
     this.timeout(5000);
-    let data;
+    let data,
+        argv = require('optimist').demand('config').argv,
+        configFilePath = argv.config;
 
-    before(function(){
+    before(() => {
+        let config = require('nconf').env().argv().file({file: configFilePath});
+
         data = scoresModule.init({
-            hostname_Scores: process.argv[5],
-            urlFolder: process.argv[6]});
+            hostname_Scores: config.get('hostname'),
+            pathFolder: config.get('pathFolder')
+        });
     });
+
+    after(() => {
+        fs.unlinkSync(configFilePath);
+    });
+
     describe('Call login', function () {
         it('Should come success response with status 1, status message Success', function (done) {
             scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(function (response) {

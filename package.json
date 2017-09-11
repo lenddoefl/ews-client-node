@@ -9,7 +9,9 @@
   "main": "index.js",
   "devDependencies": {
     "chai": "^4.1.1",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.0",
+    "nconf": "^0.8.4",
+    "optimist": "^0.6.1"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
@@ -21,7 +23,8 @@
     "url": "git@github.com:eflglobal/ews-client-node.git"
   },
   "scripts": {
-    "test": "mocha --reporter spec"
+    "config": "node tests/config.js",
+    "test": "mocha --reporter spec --config=config.json"
   },
   "private": true
 }

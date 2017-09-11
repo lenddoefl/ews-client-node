@@ -53,8 +53,8 @@ function login(clientAPI, APIKey, hostname) {
 function init(data) {
     let hostname_AJ = data.hostname_AJ;
     let hostname_Scores = data.hostname_Scores;
-    let urlFolder = data.urlFolder;
-    let APIKey = getDataFromFiles(urlFolder);
+    let pathFolder = data.pathFolder;
+    let APIKey = getDataFromFiles(pathFolder);
 
     return {hostname_AJ: hostname_AJ, hostname_Scores: hostname_Scores, APIKey: APIKey};
 }
@@ -111,19 +111,19 @@ function request(baseURL, tokens, data, endpoint) {
         });
 }
 
-function getDataFromFiles(urlFolder) {
+function getDataFromFiles(pathFolder) {
     let APIKey = {};
 
     const nameFileIdentifier = 'identifier.txt';
     const nameFileEncryption = 'encryption.key';
     const nameFileDecryption = 'decryption.key';
 
-    if (fs.statSync(urlFolder).isDirectory()) {
-        APIKey.identifier = readFile(`${urlFolder}/${nameFileIdentifier}`);
-        APIKey.encryptionKey = readFile(`${urlFolder}/${nameFileEncryption}`);
-        APIKey.decryptionKey = readFile(`${urlFolder}/${nameFileDecryption}`);
+    if (fs.statSync(pathFolder).isDirectory()) {
+        APIKey.identifier = readFile(`${pathFolder}/${nameFileIdentifier}`);
+        APIKey.encryptionKey = readFile(`${pathFolder}/${nameFileEncryption}`);
+        APIKey.decryptionKey = readFile(`${pathFolder}/${nameFileDecryption}`);
     } else {
-        let zip = new admZip(urlFolder);
+        let zip = new admZip(pathFolder);
         APIKey.identifier = zip.readAsText(nameFileIdentifier);
         APIKey.encryptionKey = zip.readAsText(nameFileEncryption);
         APIKey.decryptionKey = zip.readAsText(nameFileDecryption);
