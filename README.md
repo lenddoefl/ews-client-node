@@ -19,7 +19,7 @@ node demos/ajapiclientdemo.js <hostname> <pathToApiKey>
 ```
 Where:
 
-- `hostname` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
+- `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
 The demo authenticates to the Applicant Journey API and starts a new session.
@@ -32,7 +32,7 @@ node demos/scoresapiclientdemo.js <hostname> <pathToApiKey>
 ```
 Where:
 
-- `hostname` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
+- `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
 The demo authenticates to the Scores API and returns any subjects with ID numbers that match the query.
@@ -41,19 +41,18 @@ The demo authenticates to the Scores API and returns any subjects with ID number
 
 ## Test for Applicant Journey API
 ```
-npm run config <hostname> <pathToApiKey>
-
-npm run integrationTest tests/ajapitest.js
+npm test <nameFileTest> -- --hostname=<hostname> --pathToApiKey=<pathToApiKey>
 ```
 Where:
-- `hostname` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
+- `<nameFileTest>` is the name of the file to run test (e.g., `tests/integration/ajapitest.js`, `tests/unit/ajapitest.js`)
+- `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
 ## Test for Scores API
 ```
-npm run config <hostname> <pathToApiKey>
-
-npm run integrationTest tests/scoresapitest.js
+npm test <nameFileTest> -- --hostname=<hostname> --pathToApiKey=<pathToApiKey>
 ```
-- `hostname` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
+Where:
+- `<nameFileTest>`  is the name of the file to run test (e.g., `tests/integration/scoresapitest.js`, `tests/unit/scoresapitest.js`)
+- `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).

@@ -1,25 +1,20 @@
-var ajModule = require('../index.js').ajapiclient,
+var ajModule = require('../../index.js').ajapiclient,
+    optimist = require('optimist'),
     chai  = require('chai'),
-    expect = chai.expect,
-    fs = require('fs');
+    expect = chai.expect;
+
 
 describe('Applicant Journey CLient', function() {
     this.timeout(5000);
     let uid, data,
-        argv = require('optimist').demand('config').argv,
-        configFilePath = argv.config;
+        argvHostname = optimist.demand('hostname').argv,
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
 
     before(() => {
-        let config = require('nconf').env().argv().file({file: configFilePath});
-
         data = ajModule.init({
-            hostname_AJ: config.get('hostname'),
-            pathFolder: config.get('pathFolder')
+            hostname_AJ: argvHostname.hostname,
+            pathFolder: argvPathToApiKey.pathToApiKey
         });
-    });
-
-    after(() => {
-        fs.unlinkSync(configFilePath);
     });
 
     describe('Call login', () => {

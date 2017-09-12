@@ -1,25 +1,19 @@
-var scoresModule = require('../index.js').scoresapiclient,
+var scoresModule = require('../../index.js').scoresapiclient,
+    optimist = require('optimist'),
     chai  = require('chai'),
-    expect = chai.expect,
-    fs = require('fs');
+    expect = chai.expect;
 
 describe('Scores CLient', function () {
     this.timeout(5000);
     let data,
-        argv = require('optimist').demand('config').argv,
-        configFilePath = argv.config;
+        argvHostname = optimist.demand('hostname').argv,
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
 
     before(() => {
-        let config = require('nconf').env().argv().file({file: configFilePath});
-
         data = scoresModule.init({
-            hostname_Scores: config.get('hostname'),
-            pathFolder: config.get('pathFolder')
+            hostname_Scores: argvHostname.hostname,
+            pathFolder: argvPathToApiKey.pathToApiKey
         });
-    });
-
-    after(() => {
-        fs.unlinkSync(configFilePath);
     });
 
     describe('Call login', () => {
