@@ -24,7 +24,7 @@
   },
   "scripts": {
     "config": "node tests/config.js",
-    "test": "mocha --reporter spec --config=config.json"
+    "integrationTest": "mocha --reporter spec --config=config.json"
   },
   "private": true
 }
