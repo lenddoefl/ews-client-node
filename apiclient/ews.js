@@ -13,7 +13,7 @@ function login(clientAPI, APIKey, hostname) {
             if(response.data.statusCode===200&&response.data.statusMessage==='OK'
                 ||response.data.status===1&&response.data.statusMessage==='Success') {
 
-                let authToken, reqToken;
+                let authToken, reqToken, dataResponseLogin, processedReqToken;
                 const errorGettingTokens = 'Error getting tokens. These values are null.';
 
                 if(clientAPI==='ScoresAPI') {
@@ -39,14 +39,18 @@ function login(clientAPI, APIKey, hostname) {
                         console.log(errorGettingTokens);
                     }
                 }
+                processedReqToken = processReqToken(APIKey, auth[clientAPI]);
+                if(!!auth[clientAPI]) auth[clientAPI].reqToken = processedReqToken;
 
-                if(!!auth[clientAPI]) auth[clientAPI].reqToken = processReqToken(APIKey, auth[clientAPI]);
+                dataResponseLogin = response.data;
+                clientAPI=='ScoresAPI'?dataResponseLogin.reqToken = processedReqToken:dataResponseLogin.data.reqToken = processedReqToken;
 
-                return response.data;
+                return dataResponseLogin;
             }
         })
         .catch(error => {
-            console.log('Error:', error);
+            console.log('Error:', error.message);
+            return error.response;
         });
 }
 
@@ -107,7 +111,8 @@ function request(baseURL, tokens, data, endpoint) {
             return response.data;
         })
         .catch(error => {
-            console.log('Error:',error);
+            console.log('Error:', error.message);
+            return error.response;
         });
 }
 

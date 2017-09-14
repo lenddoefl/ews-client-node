@@ -44,5 +44,6 @@ module.exports = {
     init: ews.init,
     login: ews.login,
     subject: subject,
-    dataQuery: dataQuery
+    dataQuery: dataQuery,
+    generateURI: generateURI
 };

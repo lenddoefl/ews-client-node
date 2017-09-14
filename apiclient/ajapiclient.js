@@ -116,4 +116,5 @@ module.exports = {
     getApplication: getApplication,
     prefetchApplications: prefetchApplications,
     resumeSession: resumeSession,
+    generateURI: generateURI
 };
