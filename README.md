@@ -15,7 +15,7 @@ npm install ews-client-node --save
 
 ```
 # Run the AJ API Client Demo
-node demos/ajapiclientdemo.js <hostname> <pathToApiKey>
+node demos/ajApiClientDemo.js <hostname> <pathToApiKey>
 ```
 Where:
 
@@ -28,7 +28,7 @@ The demo authenticates to the Applicant Journey API and starts a new session.
 
 ```
 # Run the Scores API Client Demo
-node demos/scoresapiclientdemo.js <hostname> <pathToApiKey>
+node demos/scoresApiClientDemo.js <hostname> <pathToApiKey>
 ```
 Where:
 
@@ -44,7 +44,7 @@ The demo authenticates to the Scores API and returns any subjects with ID number
 npm test <nameFileTest> -- --hostname=<hostname> --pathToApiKey=<pathToApiKey>
 ```
 Where:
-- `<nameFileTest>` is the name of the file to run test (e.g., `tests/integration/ajapitest.js`, `tests/unit/ajapitest.js`)
+- `<nameFileTest>` is the name of the file to run test (e.g., `tests/integration/ajApiTest.js`, `tests/unit/ajApiTest.js`)
 - `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
@@ -53,6 +53,6 @@ Where:
 npm test <nameFileTest> -- --hostname=<hostname> --pathToApiKey=<pathToApiKey>
 ```
 Where:
-- `<nameFileTest>`  is the name of the file to run test (e.g., `tests/integration/scoresapitest.js`, `tests/unit/scoresapitest.js`)
+- `<nameFileTest>`  is the name of the file to run test (e.g., `tests/integration/scoresApiTest.js`, `tests/unit/scoresApiTest.js`)
 - `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
