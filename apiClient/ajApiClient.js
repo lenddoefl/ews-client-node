@@ -1,4 +1,4 @@
-var ews = require('./ews.js'),
+let ews = require('./ews.js'),
     auth = ews.getTokens(),
     login = ews.login,
     request = ews.request,
@@ -13,76 +13,48 @@ let clientAPI = {
 function startSession(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI.path, 'startSession');
 
-    if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(() => {
-            return request(url, auth.AJAPI, data).then(response => {
-                return response;
-            });
-        });
-    } else {
-        return request(url, auth.AJAPI, data).then(response => {
-            return response;
-        });
-    }
+    return generalRequest(url, data, APIKey, hostname);
 }
 
 function finishSession(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI.path, 'finishSession');
 
-    if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(() => {
-            return request(url, auth.AJAPI, data).then(response => {
-                return response;
-            });
-        });
-    } else {
-        return request(url, auth.AJAPI, data).then(response => {
-            return response;
-        });
-    }
+    return generalRequest(url, data, APIKey, hostname);
 }
 
 function finishStep(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI.path, 'finishStep');
 
-    if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(() => {
-            return request(url, auth.AJAPI, data).then(response => {
-                return response;
-            });
-        });
-    } else {
-        return request(url, auth.AJAPI, data).then(response => {
-            return response;
-        });
-    }
+    return generalRequest(url, data, APIKey, hostname);
 }
 
 function createAttachment(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI.path, 'createAttachment');
 
-    if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(() => {
-            return request(url, auth.AJAPI, data).then(response => {
-                return response;
-            });
-        });
-    } else {
-        return request(url, auth.AJAPI, data).then(response => {
-            return response;
-        });
-    }
+    return generalRequest(url, data, APIKey, hostname);
 }
 
 function getApplication(data, APIKey, hostname) {
     let url = generateURI(hostname, clientAPI.path, 'getApplication');
 
+    return generalRequest(url, data, APIKey, hostname);
+}
+
+function prefetchApplications(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
+
+    return loginAndHandling(url, data, APIKey, hostname);
+}
+
+function resumeSession(data, APIKey, hostname) {
+    let url = generateURI(hostname, clientAPI.path, 'resumeSession');
+
+    return loginAndHandling(url, data, APIKey, hostname);
+}
+
+function generalRequest(url, data, APIKey, hostname) {
     if(!auth.AJAPI) {
-        return login(clientAPI, APIKey, hostname).then(() => {
-            return request(url, auth.AJAPI, data).then(response => {
-                return response;
-            });
-        });
+        return loginAndHandling(url, data, APIKey, hostname);
     } else {
         return request(url, auth.AJAPI, data).then(response => {
             return response;
@@ -90,19 +62,7 @@ function getApplication(data, APIKey, hostname) {
     }
 }
 
-function prefetchApplications(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
-
-    return login(clientAPI, APIKey, hostname).then(() => {
-        return request(url, auth.AJAPI, data).then(response => {
-            return response;
-        });
-    });
-}
-
-function resumeSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'resumeSession');
-
+function loginAndHandling(url, data, APIKey, hostname) {
     return login(clientAPI, APIKey, hostname).then(() => {
         return request(url, auth.AJAPI, data).then(response => {
             return response;
