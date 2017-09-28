@@ -1,5 +1,5 @@
 var module = require('../index.js'),
-    scoresModule = module.scoresapiclient;
+    scoresModule = new module.scoresApiClient;
 
 let data = scoresModule.init({hostname_Scores:process.argv[2], pathFolder: process.argv[3]}),
     clientAPI = {

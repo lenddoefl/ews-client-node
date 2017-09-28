@@ -1,5 +1,5 @@
 var module = require('../index.js'),
-    ajModule = module.ajapiclient;
+    ajModule = new module.ajApiClient;
 
 let data = ajModule.init({hostname_AJ:process.argv[2], pathFolder: process.argv[3]}),
     clientAPI = {

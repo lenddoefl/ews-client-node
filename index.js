@@ -1,4 +1,4 @@
 module.exports = {
-    ajapiclient: require('./apiClient/ajApiClient.js'),
-    scoresapiclient: require('./apiClient/scoresApiClient.js')
+    ajApiClient: require('./apiClient/ajApiClient.js'),
+    scoresApiClient: require('./apiClient/scoresApiClient.js')
 };

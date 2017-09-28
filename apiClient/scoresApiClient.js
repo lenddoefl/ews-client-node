@@ -10,19 +10,33 @@ let clientAPI = {
     pathParams: 'auth_type=1'
 };
 
-function subject(data, APIKey, hostname) {
-    let endpoint = 'subjects';
-    let url = generateURI(hostname, clientAPI.path, 'subject', clientAPI.pathParams);
+module.exports = class ScoresApiClient {
+    subject(data, APIKey, hostname) {
+        let endpoint = 'subjects';
+        let url = generateURI(hostname, clientAPI.path, 'subject', clientAPI.pathParams);
 
-    return generalRequest(url, endpoint, data, APIKey, hostname);
-}
+        return generalRequest(url, endpoint, data, APIKey, hostname);
+    }
 
-function dataQuery(data, APIKey, hostname) {
-    let endpoint = 'dateQuery';
-    let url = generateURI(hostname, clientAPI.path, endpoint, clientAPI.pathParams);
+    dataQuery(data, APIKey, hostname) {
+        let endpoint = 'dateQuery';
+        let url = generateURI(hostname, clientAPI.path, endpoint, clientAPI.pathParams);
 
-    return generalRequest(url, endpoint, data, APIKey, hostname);
-}
+        return generalRequest(url, endpoint, data, APIKey, hostname);
+    }
+
+    init(data) {
+        return ews.init(data);
+    }
+
+    login(clientAPI, APIKey, hostname) {
+        return login(clientAPI, APIKey, hostname);
+    }
+
+    generateURI(hostname, clientAPI, endpoint, params) {
+        return generateURI(hostname, clientAPI, endpoint, params);
+    }
+};
 
 function generalRequest(url, endpoint, data, APIKey, hostname) {
     if(!auth.ScoresAPI) {
@@ -37,11 +51,3 @@ function generalRequest(url, endpoint, data, APIKey, hostname) {
         });
     }
 }
-
-module.exports = {
-    init: ews.init,
-    login: ews.login,
-    subject: subject,
-    dataQuery: dataQuery,
-    generateURI: generateURI
-};

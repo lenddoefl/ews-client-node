@@ -1,4 +1,5 @@
-var ajModule = require('../../index.js').ajapiclient,
+var module = require('../../index.js'),
+    ajModule = new module.ajApiClient,
     optimist = require('optimist'),
     chai  = require('chai'),
     expect = chai.expect,

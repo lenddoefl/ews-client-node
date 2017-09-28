@@ -1,4 +1,5 @@
-var scoresModule = require('../../index.js').scoresapiclient,
+var module = require('../../index.js'),
+    scoresModule = new module.scoresApiClient,
     optimist = require('optimist'),
     chai  = require('chai'),
     expect = chai.expect;

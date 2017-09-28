@@ -10,47 +10,61 @@ let clientAPI = {
     data: 'data'
 };
 
-function startSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'startSession');
+module.exports = class AjApiClient {
+    startSession(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'startSession');
 
-    return generalRequest(url, data, APIKey, hostname);
-}
+        return generalRequest(url, data, APIKey, hostname);
+    }
 
-function finishSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'finishSession');
+    finishSession(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'finishSession');
 
-    return generalRequest(url, data, APIKey, hostname);
-}
+        return generalRequest(url, data, APIKey, hostname);
+    }
 
-function finishStep(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'finishStep');
+    finishStep(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'finishStep');
 
-    return generalRequest(url, data, APIKey, hostname);
-}
+        return generalRequest(url, data, APIKey, hostname);
+    }
 
-function createAttachment(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'createAttachment');
+    createAttachment(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'createAttachment');
 
-    return generalRequest(url, data, APIKey, hostname);
-}
+        return generalRequest(url, data, APIKey, hostname);
+    }
 
-function getApplication(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'getApplication');
+    getApplication(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'getApplication');
 
-    return generalRequest(url, data, APIKey, hostname);
-}
+        return generalRequest(url, data, APIKey, hostname);
+    }
 
-function prefetchApplications(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
+    prefetchApplications(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
 
-    return loginAndHandling(url, data, APIKey, hostname);
-}
+        return loginAndHandling(url, data, APIKey, hostname);
+    }
 
-function resumeSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI.path, 'resumeSession');
+    resumeSession(data, APIKey, hostname) {
+        let url = generateURI(hostname, clientAPI.path, 'resumeSession');
 
-    return loginAndHandling(url, data, APIKey, hostname);
-}
+        return loginAndHandling(url, data, APIKey, hostname);
+    }
+
+    init(data) {
+        return ews.init(data);
+    }
+
+    login(clientAPI, APIKey, hostname) {
+        return login(clientAPI, APIKey, hostname);
+    }
+
+    generateURI(hostname, clientAPI, endpoint, params) {
+        return generateURI(hostname, clientAPI, endpoint, params);
+    }
+};
 
 function generalRequest(url, data, APIKey, hostname) {
     if(!auth.AJAPI) {
@@ -69,16 +83,3 @@ function loginAndHandling(url, data, APIKey, hostname) {
         });
     });
 }
-
-module.exports = {
-    init: ews.init,
-    login: ews.login,
-    startSession: startSession,
-    finishSession: finishSession,
-    finishStep: finishStep,
-    createAttachment: createAttachment,
-    getApplication: getApplication,
-    prefetchApplications: prefetchApplications,
-    resumeSession: resumeSession,
-    generateURI: generateURI
-};
