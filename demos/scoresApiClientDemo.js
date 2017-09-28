@@ -2,6 +2,11 @@ var module = require('../index.js'),
     scoresModule = module.scoresapiclient;
 
 let data = scoresModule.init({hostname_Scores:process.argv[2], pathFolder: process.argv[3]}),
+    clientAPI = {
+        name: 'ScoresAPI',
+        path: 'api/v1/scores',
+        pathParams: 'auth_type=1'
+    },
     dataForSubject = [
     {
         "identification": [
@@ -14,7 +19,7 @@ let data = scoresModule.init({hostname_Scores:process.argv[2], pathFolder: proce
     ],
     dataForDataQuery = "2017-08-24 00:00:00";
 
-scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(response => {
+scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
     console.log('Response calling login', response);
 });
 

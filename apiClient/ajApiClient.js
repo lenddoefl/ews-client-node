@@ -4,10 +4,14 @@ var ews = require('./ews.js'),
     request = ews.request,
     generateURI = ews.generateURI;
 
-var clientAPI = 'AJAPI';
+let clientAPI = {
+    name: 'AJAPI',
+    path: 'api/v2/applicant_journey',
+    data: 'data'
+};
 
 function startSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'startSession');
+    let url = generateURI(hostname, clientAPI.path, 'startSession');
 
     if(!auth.AJAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
@@ -23,7 +27,7 @@ function startSession(data, APIKey, hostname) {
 }
 
 function finishSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'finishSession');
+    let url = generateURI(hostname, clientAPI.path, 'finishSession');
 
     if(!auth.AJAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
@@ -39,7 +43,7 @@ function finishSession(data, APIKey, hostname) {
 }
 
 function finishStep(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'finishStep');
+    let url = generateURI(hostname, clientAPI.path, 'finishStep');
 
     if(!auth.AJAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
@@ -55,7 +59,7 @@ function finishStep(data, APIKey, hostname) {
 }
 
 function createAttachment(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'createAttachment');
+    let url = generateURI(hostname, clientAPI.path, 'createAttachment');
 
     if(!auth.AJAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
@@ -71,7 +75,7 @@ function createAttachment(data, APIKey, hostname) {
 }
 
 function getApplication(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'getApplication');
+    let url = generateURI(hostname, clientAPI.path, 'getApplication');
 
     if(!auth.AJAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
@@ -87,7 +91,7 @@ function getApplication(data, APIKey, hostname) {
 }
 
 function prefetchApplications(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'prefetchApplications');
+    let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
 
     return login(clientAPI, APIKey, hostname).then(() => {
         return request(url, auth.AJAPI, data).then(response => {
@@ -97,7 +101,7 @@ function prefetchApplications(data, APIKey, hostname) {
 }
 
 function resumeSession(data, APIKey, hostname) {
-    let url = generateURI(hostname, clientAPI, 'resumeSession');
+    let url = generateURI(hostname, clientAPI.path, 'resumeSession');
 
     return login(clientAPI, APIKey, hostname).then(() => {
         return request(url, auth.AJAPI, data).then(response => {

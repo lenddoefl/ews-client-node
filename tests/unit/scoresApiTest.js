@@ -8,14 +8,19 @@ describe('Scores CLient', function () {
     this.timeout(5000);
     let data, urlLogin,
         argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv,
+        clientAPI = {
+            name: 'ScoresAPI',
+            path: 'api/v1/scores',
+            pathParams: 'auth_type=1'
+        };
 
     before(() => {
         data = scoresModule.init({
             hostname_Scores: argvHostname.hostname,
             pathFolder: argvPathToApiKey.pathToApiKey
         });
-        urlLogin = scoresModule.generateURI(data.hostname_Scores, 'ScoresAPI', 'login');
+        urlLogin = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'login', clientAPI.pathParams);
     });
 
     beforeEach(() => {
@@ -40,7 +45,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
                     expect(response.authToken).to.equal('cnHgUZ/M0x5JG9T7KqDQSQ==\n');
@@ -61,7 +66,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
                     expect(response.status).to.equal(403);
                     expect(response.statusText).to.equal('FORBIDDEN');
                     expect(response.data.status).to.equal(0);
@@ -75,7 +80,7 @@ describe('Scores CLient', function () {
 
     describe('Call subject', () => {
         it('Should come success response with status 1, status message Success, correct subjects', done => {
-            let urlSubject = scoresModule.generateURI(data.hostname_Scores, 'ScoresAPI', 'subject'),
+            let urlSubject = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'subject', clientAPI.pathParams),
                 subjects = [
                     {
                         answerReliabilityFlag: "Green",
@@ -136,7 +141,7 @@ describe('Scores CLient', function () {
 
     describe('Call dataQuery', () => {
         it('Should come success response with status 1, status message Success, correct subjects', done => {
-            let urlDataQuery = scoresModule.generateURI(data.hostname_Scores, 'ScoresAPI', 'dateQuery'),
+            let urlDataQuery = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'dateQuery', clientAPI.pathParams),
                 subjects = [
                     {
                         answerReliabilityFlag: "Green",

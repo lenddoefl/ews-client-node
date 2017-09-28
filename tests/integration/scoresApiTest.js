@@ -7,7 +7,12 @@ describe('Scores CLient', function () {
     this.timeout(5000);
     let data,
         argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv,
+        clientAPI = {
+            name: 'ScoresAPI',
+            path: 'api/v1/scores',
+            pathParams: 'auth_type=1'
+        };
 
     before(() => {
         data = scoresModule.init({
@@ -18,7 +23,7 @@ describe('Scores CLient', function () {
 
     describe('Call login', () => {
         it('Should come success response with status 1, status message Success', done => {
-            scoresModule.login('ScoresAPI', data.APIKey, data.hostname_Scores).then(response => {
+            scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 

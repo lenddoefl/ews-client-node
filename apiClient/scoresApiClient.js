@@ -4,11 +4,15 @@ var ews = require('./ews.js'),
     request = ews.request,
     generateURI = ews.generateURI;
 
-var clientAPI = 'ScoresAPI';
+let clientAPI = {
+    name: 'ScoresAPI',
+    path: 'api/v1/scores',
+    pathParams: 'auth_type=1'
+};
 
 function subject(data, APIKey, hostname) {
     let endpoint = 'subjects';
-    let url = generateURI(hostname, clientAPI, 'subject');
+    let url = generateURI(hostname, clientAPI.path, 'subject', clientAPI.pathParams);
 
     if(!auth.ScoresAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
@@ -25,7 +29,7 @@ function subject(data, APIKey, hostname) {
 
 function dataQuery(data, APIKey, hostname) {
     let endpoint = 'dateQuery';
-    let url = generateURI(hostname, clientAPI, endpoint);
+    let url = generateURI(hostname, clientAPI.path, endpoint, clientAPI.pathParams);
 
     if(!auth.ScoresAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {

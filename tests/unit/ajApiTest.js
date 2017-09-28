@@ -8,14 +8,19 @@ describe('Applicant Journey CLient', function () {
     this.timeout(5000);
     let data, urlLogin, uid,
         argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv,
+        clientAPI = {
+            name: 'AJAPI',
+            path: 'api/v2/applicant_journey',
+            data: 'data'
+        };
 
     before(() => {
         data = ajModule.init({
             hostname_AJ: argvHostname.hostname,
             pathFolder: argvPathToApiKey.pathToApiKey
         });
-        urlLogin = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'login');
+        urlLogin = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'login');
     });
 
     beforeEach(() => {
@@ -43,7 +48,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.login('AJAPI', data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.login(clientAPI, data.APIKey, data.hostname_AJ).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data.authToken).to.equal('iQsyemeGaI3ThwETOlwFbg==\n');
@@ -68,7 +73,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.login('AJAPI', data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.login(clientAPI, data.APIKey, data.hostname_AJ).then(response => {
                     expect(response.status).to.equal(401);
                     expect(response.statusText).to.equal('UNAUTHORIZED');
                     expect(response.data.statusCode).to.equal(401);
@@ -84,7 +89,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call startSession', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlStartSession = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'startSession'),
+            let urlStartSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'startSession'),
                 dataResponse = {
                         applicationHash: '64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0',
                         publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlc2BS063TWMy4O/tMRaePswCE8mBZO+zv4p3xpGYARPAgCQ/djIiNo9IvKF+aI91yKDoNiNCQaD61fuiOEtpwglq08+Kijraa5TtWDdTu29bYQI+AMQosskXOsnj5GprHTnpyjthTmM3xNVgncVKKbJEV6657mtdl5zh0brchVd66wSNsQXtkpbW0yw15Ek2H4orqcJoFtOLz63OTPwlf24VpkHnrquY7MDlFaTkpnHaUtEDfgVUhA5w90DdSbxICWWlDu49tMHhUnJ+ziD/h3QNG4NU5nJUIlRL/IXByC9vTzyCXEEoFVrlBQLz8o9xyYiLHv+fE6+Onx771wRKQIDAQAB',
@@ -120,7 +125,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call finishSession', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlFinishSession = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'finishSession'),
+            let urlFinishSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'finishSession'),
                 dataForCall = {
                     sequence: 0,
                     uid: uid
@@ -150,7 +155,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call finishStep', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlFinishStep = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'finishStep'),
+            let urlFinishStep = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'finishStep'),
                 dataForCall = {
                     applicant: {},
                     device: {
@@ -199,7 +204,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call createAttachment', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlCreateAttachment = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'createAttachment'),
+            let urlCreateAttachment = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'createAttachment'),
                 dataResponse = {
                     attachmentUid: '5c4e3282412e4548bd3194e8eac52099'
                 },
@@ -277,7 +282,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call getApplication', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlGetApplication = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'getApplication'),
+            let urlGetApplication = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'getApplication'),
                 completedSteps=['completedSteps'],
                 dataResponse = {
                     applicant: {},
@@ -340,7 +345,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call resumeSession', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlResumeSession = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'resumeSession'),
+            let urlResumeSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'resumeSession'),
                 dataResponse = {
                     uid: uid,
                     publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw9wCxActD6cQtwPuKTgGrxQ+tAqv2FQQaMy+99FPLLn2JnApxcWCavoaPRCmWJU50aHjXxtK4HG0/oN6xKjPwtm7TU0O/y4iL0M3bs4a9TpL/vErf68m/LA+Qd0knP8fCwjOQTucCyuOLzat1rW08feee0o1VOvJqY6U7ewonWJEzOsK4KewKhzHEY+QWJrkI1H5GZIC2oCH5+LdxkeU/w5lL/MYVfWclUpsdH0KiWadEHTw3hzXQKaTeDZb6OPUC+2CFWUjaIS2CS3/KSonzbXtbTCWcmCjb6dLKkQAMYkXLw3/WHGfDwiqzsYOznhtRPNP49Bq12bRMOr6Nch8rwIDAQAB'
@@ -387,7 +392,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call prefetchApplications', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlPrefetchApplications = ajModule.generateURI(data.hostname_AJ, 'AJAPI', 'prefetchApplications'),
+            let urlPrefetchApplications = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'prefetchApplications'),
                 dataResponse = {
                     sdkExample: {
                         applicationHash: '64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0',

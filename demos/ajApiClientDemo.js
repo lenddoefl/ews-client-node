@@ -1,14 +1,19 @@
 var module = require('../index.js'),
     ajModule = module.ajapiclient;
 
-let data = ajModule.init({hostname_AJ:process.argv[2], pathFolder: process.argv[3]});
+let data = ajModule.init({hostname_AJ:process.argv[2], pathFolder: process.argv[3]}),
+    clientAPI = {
+        name: 'AJAPI',
+        path: 'api/v2/applicant_journey',
+        data: 'data'
+    };
 
 let dataForStartSession = {
     applicant: {},
     application: "sdkExample"
 };
 
-ajModule.login('AJAPI', data.APIKey, data.hostname_AJ)
+ajModule.login(clientAPI, data.APIKey, data.hostname_AJ)
     .then(response => {
         console.log('Response calling login');
         console.log('authToken:', response.data.authToken);

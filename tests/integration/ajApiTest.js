@@ -8,7 +8,12 @@ describe('Applicant Journey CLient', function() {
     this.timeout(5000);
     let uid, data,
         argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv,
+        clientAPI = {
+            name: 'AJAPI',
+            path: 'api/v2/applicant_journey',
+            data: 'data'
+        };
 
     before(() => {
         data = ajModule.init({
@@ -19,7 +24,7 @@ describe('Applicant Journey CLient', function() {
 
     describe('Call login', () => {
         it('Should come success response with status code 200, status message OK', done => {
-            ajModule.login('AJAPI', data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.login(clientAPI, data.APIKey, data.hostname_AJ).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 

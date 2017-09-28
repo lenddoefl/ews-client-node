@@ -6,50 +6,46 @@ var fs = require('fs'),
 var auth = {};
 
 function login(clientAPI, APIKey, hostname) {
-    const url = generateURI(hostname, clientAPI, 'login');
+    let url;
+
+    if(clientAPI.pathParams) {
+        url = generateURI(hostname, clientAPI.path, 'login', clientAPI.pathParams);
+    } else {
+        url = generateURI(hostname, clientAPI.path, 'login');
+    }
 
     return axios.post(url, {identifier: APIKey.identifier})
         .then(response => {
-            if(response.data.statusCode===200&&response.data.statusMessage==='OK'
-                ||response.data.status===1&&response.data.statusMessage==='Success') {
+            let authToken, reqToken, responseData, processedReqToken;
 
-                let authToken, reqToken, dataResponseLogin, processedReqToken;
-                const errorGettingTokens = 'Error getting tokens. These values are null.';
+            responseData = response.data;
 
-                if(clientAPI==='ScoresAPI') {
-                    authToken = response.data.authToken;
-                    reqToken = response.data.reqToken;
+            if(clientAPI.data) {
+                authToken = responseData[clientAPI.data].authToken;
+                reqToken = responseData[clientAPI.data].reqToken;
+            } else {
+                authToken = responseData.authToken;
+                reqToken = responseData.reqToken;
+            }
 
-                    if(authToken!=null&&reqToken!=null) {
-                        auth[clientAPI] = {
-                            authToken: response.data.authToken,
-                            reqToken: response.data.reqToken
-                        };
-                    } else {
-                        console.log(errorGettingTokens);
-                    }
-                } else {
-                    authToken = response.data.data.authToken;
-                    reqToken = response.data.data.reqToken;
+            if(authToken&&reqToken) {
+                auth[clientAPI.name] = {
+                    authToken: authToken,
+                    reqToken: reqToken
+                };
 
-                    if(authToken!=null&&reqToken!=null) {
-                        auth[clientAPI] = Object.assign({},response.data.data);
-                    }
-                    else {
-                        console.log(errorGettingTokens);
-                    }
-                }
-                processedReqToken = processReqToken(APIKey, auth[clientAPI]);
-                if(!!auth[clientAPI]) auth[clientAPI].reqToken = processedReqToken;
+                processedReqToken = processReqToken(APIKey, auth[clientAPI.name]);
 
-                dataResponseLogin = response.data;
-                clientAPI=='ScoresAPI'?dataResponseLogin.reqToken = processedReqToken:dataResponseLogin.data.reqToken = processedReqToken;
+                if(!!auth[clientAPI.name]) auth[clientAPI.name].reqToken = processedReqToken;
 
-                return dataResponseLogin;
+                clientAPI.data?responseData[clientAPI.data].reqToken = processedReqToken:responseData.reqToken = processedReqToken;
+
+                return responseData;
+            } else {
+                throw new Error('Error getting tokens. These values do not exist');
             }
         })
         .catch(error => {
-            console.log('Error:', error.message);
             return error.response;
         });
 }
@@ -111,7 +107,6 @@ function request(baseURL, tokens, data, endpoint) {
             return response.data;
         })
         .catch(error => {
-            console.log('Error:', error.message);
             return error.response;
         });
 }
@@ -146,12 +141,13 @@ function getTokens() {
     return auth;
 }
 
-function generateURI(hostname, clientAPI, endpoint) {
+function generateURI(hostname, clientAPI, endpoint, params) {
     let url;
-    if(clientAPI==='AJAPI') {
-        url = `https://${hostname}/api/v2/applicant_journey/${endpoint}.json`;
+
+    if(params) {
+        url = `https://${hostname}/${clientAPI}/${endpoint}.json?${params}`;
     } else {
-        url = `https://${hostname}/api/v1/scores/${endpoint}.json?auth_type=1`;
+        url = `https://${hostname}/${clientAPI}/${endpoint}.json`;
     }
 
     return url;
