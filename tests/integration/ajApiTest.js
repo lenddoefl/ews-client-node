@@ -7,7 +7,7 @@ var module = require('../../index.js'),
 
 describe('Applicant Journey CLient', function() {
     this.timeout(5000);
-    let uid, data,
+    let data,
         argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv,
         clientAPI = {
@@ -41,8 +41,6 @@ describe('Applicant Journey CLient', function() {
                 application: "sdkExample"
             };
             ajModule.startSession(dataForCallStartSession, data.APIKey, data.hostname_AJ).then(response => {
-                uid = response.data.uid;
-
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -54,8 +52,7 @@ describe('Applicant Journey CLient', function() {
     describe('Call finishSession', () => {
         it('Should come success response with status code 200, status message OK', done => {
             let dataForCall = {
-                sequence: 0,
-                uid: uid
+                sequence: 0
             };
 
             ajModule.finishSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
@@ -89,8 +86,7 @@ describe('Applicant Journey CLient', function() {
                 observations: {},
                 sequence: 0,
                 state: {},
-                step: 'abGlobal',
-                uid: uid
+                step: 'abGlobal'
             };
 
             ajModule.finishStep(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
@@ -149,8 +145,7 @@ describe('Applicant Journey CLient', function() {
                             6Z6LWJXpnprEr0z0WsSvTPTWJXpnotYlememsSvTPTWJXpnoskSKqCmhSpUCACP8x//Z`,
                 name: 'test',
                 sha1Hash: 'a658db8045c171c85e42a257654bad0ebfec1ce1',
-                size: 2217,
-                uid: uid
+                size: 2217
             };
            ajModule.createAttachment(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
                 expect(response.statusCode).to.equal(200);
@@ -181,8 +176,7 @@ describe('Applicant Journey CLient', function() {
                 player: {
                     type: 'web-embedded',
                     version: '1.20'
-                },
-                uid: uid
+                }
             };
 
             ajModule.getApplication(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
@@ -197,8 +191,7 @@ describe('Applicant Journey CLient', function() {
     describe('Call resumeSession', () => {
         it('Should come success response with status code 200, status message OK', done => {
             let dataForCall = {
-                applicant: {},
-                uid: uid
+                applicant: {}
             };
 
             ajModule.resumeSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {

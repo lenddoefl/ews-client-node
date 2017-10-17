@@ -18,51 +18,47 @@ ajModule.login(clientAPI, data.APIKey, data.hostname_AJ)
         console.log('Response calling login');
         console.log('authToken:', response.data.authToken);
         console.log('reqToken:', response.data.reqToken);
-    })
-    .then(()=> {
-        let resultStartSession = ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ);
-        resultStartSession.then(response => {
-            console.log('Response calling startSession');
-            console.log('Application hash: ' + response.data.applicationHash);
-            console.log('Public Key: ' + response.data.publicKey);
-            console.log('UID: ' + response.data.uid);
     });
-        resultStartSession.then(response => {
-            let uid = response.data.uid;
 
-            let dataForFinishStep = {
-                applicant: {},
-                device: {
-                    browser: null,
-                    deviceId: null,
-                    ipAddress: null,
-                    os: {
-                        type: null,
-                        version: null
-                    },
-                    referrer: null,
-                    viewport: {
-                        height: null,
-                        width: null
-                    }
+ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
+    .then(response => {
+        console.log('Response calling startSession');
+        console.log('Application hash: ' + response.data.applicationHash);
+        console.log('Public Key: ' + response.data.publicKey);
+        console.log('UID: ' + response.data.uid);
+    })
+    .then(()=>{
+        let dataForFinishStep = {
+            applicant: {},
+            device: {
+                browser: null,
+                deviceId: null,
+                ipAddress: null,
+                os: {
+                    type: null,
+                    version: null
                 },
-                metas: {},
-                observations: {},
-                sequence: 0,
-                state: {},
-                step: 'abGlobal',
-                uid: uid
-            };
+                referrer: null,
+                viewport: {
+                    height: null,
+                    width: null
+                }
+            },
+            metas: {},
+            observations: {},
+            sequence: 0,
+            state: {},
+            step: 'abGlobal'
+        };
+        ajModule.finishStep(dataForFinishStep, data.APIKey, data.hostname_AJ).then(response => {
+            console.log('Response calling finishStep', response);
+        });
 
-            ajModule.finishStep(dataForFinishStep, data.APIKey, data.hostname_AJ).then(response => {
-                console.log('Response calling finishStep', response);
-            });
-
-            let dataForCreateAttachment = {
-                attachmentType: 'photo',
-                attachmentTypeVersion: '1.0',
-                contentType: 'image/jpeg',
-                inlineData: `/9j/4AAQSkZJRgABAQEASABIAAD/2wCEAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgH
+        let dataForCreateAttachment = {
+            attachmentType: 'photo',
+            attachmentTypeVersion: '1.0',
+            contentType: 'image/jpeg',
+            inlineData: `/9j/4AAQSkZJRgABAQEASABIAAD/2wCEAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgH
                             CAgJCg0LCQoMCggICw8LDA0ODg8OCQsQERAOEQ0ODg4BAgMDAwMDBwQEBw4JCAkODg4ODg4ODg4O
                             Dg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODv/CABEIAMgAyAMBIgACEQED
                             EQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAACAkBB//aAAgBAQAAAADfwAAABCc+AAAHqejjEqBAAACw
@@ -101,69 +97,59 @@ ajModule.login(clientAPI, data.APIKey, data.hostname_AJ)
                             m3e49qjEnyMNFNu9x7VGJPkYaKbd7j2qMSfIw0U273HtUYk+Rhopt3uPaoxJ8jDRTbvce1RiT5GG
                             im3e49qjEnyMNFNu9x7VGJPkYaKbd7j2qMSfIw0U273HtUUdvHqX60B8n5H8axK9M9FrEr0z01iV
                             6Z6LWJXpnprEr0z0WsSvTPTWJXpnotYlememsSvTPTWJXpnoskSKqCmhSpUCACP8x//Z`,
-                name: 'test',
-                sha1Hash: 'a658db8045c171c85e42a257654bad0ebfec1ce1',
-                size: 2217,
-                uid: uid
-            };
+            name: 'test',
+            sha1Hash: 'a658db8045c171c85e42a257654bad0ebfec1ce1',
+            size: 2217
+        };
+        ajModule.createAttachment(dataForCreateAttachment, data.APIKey, data.hostname_AJ).then(response => {
+            console.log('Response calling createAttachment', response);
+        });
 
-            ajModule.createAttachment(dataForCreateAttachment, data.APIKey, data.hostname_AJ).then(response => {
-                console.log('Response calling createAttachment', response);
-            });
-
-            let dataForGetApplication = {
-                device: {
-                    browser: null,
-                    deviceId: null,
-                    ipAddress: null,
-                    os: {
-                        type: null,
-                        version: null
-                    },
-                    referrer: null,
-                    viewport: {
-                        height: null,
-                        width: null
-                    }
+        let dataForGetApplication = {
+            device: {
+                browser: null,
+                deviceId: null,
+                ipAddress: null,
+                os: {
+                    type: null,
+                    version: null
                 },
-                player: {
-                    type: 'web-embedded',
-                    version: '1.20'
-                },
-                uid: uid
-            };
-
-            ajModule.getApplication(dataForGetApplication, data.APIKey, data.hostname_AJ).then(response => {
-                console.log('Response calling getApplication', response);
-            });
-
-
-            let dataForFinishSession = {
-                sequence: 1,
-                uid: uid
-            };
-
-            ajModule.finishSession(dataForFinishSession, data.APIKey, data.hostname_AJ).then(response => {
-                console.log('Response calling finishSession', response);
-            });
-
-            let dataForResumeSession = {
-                applicant: {},
-                uid: uid
-            };
-
-            ajModule.resumeSession(dataForResumeSession, data.APIKey, data.hostname_AJ).then(response => {
-                console.log('Response calling resumeSession', response);
-            });
-
-            let dataForPrefetchApplications = {
-                applications: {
-                    sdkExample: "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"
+                referrer: null,
+                viewport: {
+                    height: null,
+                    width: null
                 }
-            };
+            },
+            player: {
+                type: 'web-embedded',
+                version: '1.20'
+            }
+        };
+        ajModule.getApplication(dataForGetApplication, data.APIKey, data.hostname_AJ).then(response => {
+            console.log('Response calling getApplication', response);
+        });
 
-            ajModule.prefetchApplications(dataForPrefetchApplications, data.APIKey, data.hostname_AJ).then(response => {
-                console.log('Response calling prefetchApplications', response);
-            });
+        let dataForFinishSession = {
+            sequence: 1
+        };
+
+        ajModule.finishSession(dataForFinishSession, data.APIKey, data.hostname_AJ).then(response => {
+            console.log('Response calling finishSession', response);
+        });
+
+        let dataForResumeSession = {
+            applicant: {}
+        };
+        ajModule.resumeSession(dataForResumeSession, data.APIKey, data.hostname_AJ).then(response => {
+            console.log('Response calling resumeSession', response);
+        });
+
+        let dataForPrefetchApplications = {
+            applications: {
+                sdkExample: "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"
+            }
+        };
+        ajModule.prefetchApplications(dataForPrefetchApplications, data.APIKey, data.hostname_AJ).then(response => {
+            console.log('Response calling prefetchApplications', response);
         });
     });

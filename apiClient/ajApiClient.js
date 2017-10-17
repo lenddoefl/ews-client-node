@@ -10,33 +10,42 @@ let clientAPI = {
     data: 'data'
 };
 
+let uid;
+
 module.exports = class AjApiClient {
     startSession(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'startSession');
 
-        return generalRequest(url, data, APIKey, hostname);
+        return generalRequest(url, data, APIKey, hostname).then((response) => {
+            setUid(response.data.uid);
+            return response;
+        });
     }
 
     finishSession(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'finishSession');
+        data.uid = getUid();
 
         return generalRequest(url, data, APIKey, hostname);
     }
 
     finishStep(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'finishStep');
+        data.uid = getUid();
 
         return generalRequest(url, data, APIKey, hostname);
     }
 
     createAttachment(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'createAttachment');
+        data.uid = getUid();
 
         return generalRequest(url, data, APIKey, hostname);
     }
 
     getApplication(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'getApplication');
+        data.uid = getUid();
 
         return generalRequest(url, data, APIKey, hostname);
     }
@@ -49,6 +58,7 @@ module.exports = class AjApiClient {
 
     resumeSession(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'resumeSession');
+        data.uid = getUid();
 
         return loginAndHandling(url, data, APIKey, hostname);
     }
@@ -63,6 +73,10 @@ module.exports = class AjApiClient {
 
     generateURI(hostname, clientAPI, endpoint, params) {
         return generateURI(hostname, clientAPI, endpoint, params);
+    }
+
+    getUid() {
+        return getUid();
     }
 };
 
@@ -82,4 +96,12 @@ function loginAndHandling(url, data, APIKey, hostname) {
             return response;
         });
     });
+}
+
+function setUid(data) {
+    uid = data;
+}
+
+function getUid() {
+    return uid;
 }

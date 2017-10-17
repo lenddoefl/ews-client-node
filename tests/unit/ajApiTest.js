@@ -7,7 +7,7 @@ var module = require('../../index.js'),
 
 describe('Applicant Journey CLient', function () {
     this.timeout(5000);
-    let data, urlLogin, uid,
+    let data, urlLogin,
         argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv,
         clientAPI = {
@@ -99,8 +99,7 @@ describe('Applicant Journey CLient', function () {
                 dataForCall = {
                     applicant: {},
                     application: "sdkExample"
-                },
-                uid = dataResponse.uid;
+                };
 
             moxios.stubRequest(urlStartSession, {
                 response: {
@@ -128,8 +127,7 @@ describe('Applicant Journey CLient', function () {
         it('Should come success response with status code 200, status message OK, correct data', done => {
             let urlFinishSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'finishSession'),
                 dataForCall = {
-                    sequence: 0,
-                    uid: uid
+                    sequence: 0
                 };
 
             moxios.stubRequest(urlFinishSession, {
@@ -177,8 +175,7 @@ describe('Applicant Journey CLient', function () {
                     observations: {},
                     sequence: 0,
                     state: {},
-                    step: 'abGlobal',
-                    uid: uid
+                    step: 'abGlobal'
                 };
 
             moxios.stubRequest(urlFinishStep, {
@@ -254,8 +251,7 @@ describe('Applicant Journey CLient', function () {
                             6Z6LWJXpnprEr0z0WsSvTPTWJXpnotYlememsSvTPTWJXpnoskSKqCmhSpUCACP8x//Z`,
                     name: 'test',
                     sha1Hash: 'a658db8045c171c85e42a257654bad0ebfec1ce1',
-                    size: 2217,
-                    uid: uid
+                    size: 2217
                 };
 
             moxios.stubRequest(urlCreateAttachment, {
@@ -312,8 +308,7 @@ describe('Applicant Journey CLient', function () {
                     player: {
                         type: 'web-embedded',
                         version: '1.20'
-                    },
-                    uid: uid
+                    }
                 };
 
             moxios.stubRequest(urlGetApplication, {
@@ -348,12 +343,11 @@ describe('Applicant Journey CLient', function () {
         it('Should come success response with status code 200, status message OK, correct data', done => {
             let urlResumeSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'resumeSession'),
                 dataResponse = {
-                    uid: uid,
+                    uid: ajModule.getUid(),
                     publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw9wCxActD6cQtwPuKTgGrxQ+tAqv2FQQaMy+99FPLLn2JnApxcWCavoaPRCmWJU50aHjXxtK4HG0/oN6xKjPwtm7TU0O/y4iL0M3bs4a9TpL/vErf68m/LA+Qd0knP8fCwjOQTucCyuOLzat1rW08feee0o1VOvJqY6U7ewonWJEzOsK4KewKhzHEY+QWJrkI1H5GZIC2oCH5+LdxkeU/w5lL/MYVfWclUpsdH0KiWadEHTw3hzXQKaTeDZb6OPUC+2CFWUjaIS2CS3/KSonzbXtbTCWcmCjb6dLKkQAMYkXLw3/WHGfDwiqzsYOznhtRPNP49Bq12bRMOr6Nch8rwIDAQAB'
                 },
                 dataForCall = {
-                    applicant: {},
-                    uid: uid
+                    applicant: {}
                 };
 
             moxios.stubRequest(urlLogin, {
