@@ -42,12 +42,12 @@ function generalRequest(url, endpoint, data, APIKey, hostname) {
     if(!auth.ScoresAPI) {
         return login(clientAPI, APIKey, hostname).then(() => {
             return request(url, auth.ScoresAPI, data, endpoint).then(response => {
-                return response;
+                return response.data;
             });
         });
     } else {
         return request(url, auth.ScoresAPI, data, endpoint).then(response => {
-            return response;
+            return response.data;
         });
     }
 }

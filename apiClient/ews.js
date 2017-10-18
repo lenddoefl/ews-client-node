@@ -104,10 +104,7 @@ function request(baseURL, tokens, data, endpoint) {
 
     return axios.post(baseURL, postData)
         .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            return error.response;
+            return response;
         });
 }
 
