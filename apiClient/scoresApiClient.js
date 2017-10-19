@@ -26,6 +26,7 @@ module.exports = class ScoresApiClient {
     }
 
     init(data) {
+        data.clientAPI = 'Scores';
         return ews.init(data);
     }
 

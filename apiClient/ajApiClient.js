@@ -62,6 +62,7 @@ module.exports = class AjApiClient {
     }
 
     init(data) {
+        data.clientAPI = 'AJ';
         return ews.init(data);
     }
 

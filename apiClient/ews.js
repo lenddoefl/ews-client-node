@@ -51,12 +51,12 @@ function login(clientAPI, APIKey, hostname) {
 }
 
 function init(data) {
-    let hostname_AJ = data.hostname_AJ;
-    let hostname_Scores = data.hostname_Scores;
+    let nameHostnameClient = `hostname_${data.clientAPI}`;
+    let hostname = data[nameHostnameClient];
     let pathFolder = data.pathFolder;
     let APIKey = getDataFromFiles(pathFolder);
 
-    return {hostname_AJ: hostname_AJ, hostname_Scores: hostname_Scores, APIKey: APIKey};
+    return {[nameHostnameClient]: hostname, APIKey: APIKey};
 }
 
 function processReqToken(keys, tokens) {
