@@ -25,5 +25,6 @@
   "scripts": {
     "test": "mocha --reporter spec"
   },
+  "homepage": "https://github.com/eflglobal/ews-client-node#readme",
   "private": true
 }
