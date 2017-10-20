@@ -18,7 +18,7 @@ module.exports = class ScoresApiClient {
         return generalRequest(url, endpoint, data, APIKey, hostname);
     }
 
-    dataQuery(data, APIKey, hostname) {
+    dateQuery(data, APIKey, hostname) {
         let endpoint = 'dateQuery';
         let url = generateURI(hostname, clientAPI.path, endpoint, clientAPI.pathParams);
 

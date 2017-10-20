@@ -140,9 +140,9 @@ describe('Scores CLient', function () {
         });
     });
 
-    describe('Call dataQuery', () => {
+    describe('Call dateQuery', () => {
         it('Should come success response with status 1, status message Success, correct subjects', done => {
-            let urlDataQuery = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'dateQuery', clientAPI.pathParams),
+            let urlDateQuery = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'dateQuery', clientAPI.pathParams),
                 subjects = [
                     {
                         answerReliabilityFlag: "Green",
@@ -171,7 +171,7 @@ describe('Scores CLient', function () {
                 ],
                 dataForCall = "2017-08-24 00:00:00";
 
-            moxios.stubRequest(urlDataQuery, {
+            moxios.stubRequest(urlDateQuery, {
                 response: {
                     status: 1,
                     subjects: subjects,
@@ -180,7 +180,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.dataQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.dateQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
                     expect(response.subjects).to.be.an('array');

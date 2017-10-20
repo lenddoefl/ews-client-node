@@ -17,7 +17,7 @@ let data = scoresModule.init({hostname_Scores:process.argv[2], pathFolder: proce
         ]
     }
     ],
-    dataForDataQuery = "2017-08-24 00:00:00";
+    dataForDateQuery = "2017-08-24 00:00:00";
 
 scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
     console.log('Response calling login', response);
@@ -27,6 +27,6 @@ scoresModule.subject(dataForSubject, data.APIKey, data.hostname_Scores).then(res
     console.log('Response calling subject', response);
 });
 
-scoresModule.dataQuery(dataForDataQuery, data.APIKey, data.hostname_Scores).then(response => {
-    console.log('Response calling dataQuery', response);
+scoresModule.dateQuery(dataForDateQuery, data.APIKey, data.hostname_Scores).then(response => {
+    console.log('Response calling dateQuery', response);
 });

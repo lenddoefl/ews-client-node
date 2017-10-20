@@ -55,11 +55,11 @@ describe('Scores CLient', function () {
         });
     });
 
-    describe('Call dataQuery', () => {
+    describe('Call dateQuery', () => {
         it('Should come success response with status 1, status message Success', done => {
             let dataForCall = "2017-08-24 00:00:00";
 
-            scoresModule.dataQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
+            scoresModule.dateQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 
