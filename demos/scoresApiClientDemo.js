@@ -12,7 +12,7 @@ let data = scoresModule.init({hostname_Scores:process.argv[2], pathFolder: proce
         ]
     }
     ],
-    dataForDateQuery = "2017-08-24 00:00:00";
+    dataForDateQuery = "2017-11-02 00:00:00";
 
 scoresModule.login(data.APIKey, data.hostname_Scores).then(response => {
     console.log('Response calling login', response);
