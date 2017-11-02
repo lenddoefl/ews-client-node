@@ -56,7 +56,7 @@ module.exports = class AjApiClient {
     prefetchApplications(data, APIKey, hostname) {
         let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
 
-        return this.loginAndHandling(url, data, APIKey, hostname);
+        return this.generalRequest(url, data, APIKey, hostname);
     }
 
     resumeSession(data, APIKey, hostname) {
