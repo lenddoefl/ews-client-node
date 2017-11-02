@@ -11,7 +11,6 @@ describe('Scores CLient', function () {
         argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv,
         clientAPI = {
-            name: 'ScoresAPI',
             path: 'api/v1/scores',
             pathParams: 'auth_type=1'
         };
@@ -46,7 +45,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.login(data.APIKey, data.hostname_Scores).then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
                     expect(response.authToken).to.equal('cnHgUZ/M0x5JG9T7KqDQSQ==\n');
@@ -67,7 +66,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.login(clientAPI, data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.login(data.APIKey, data.hostname_Scores).then(response => {
                     expect(response.status).to.equal(403);
                     expect(response.statusText).to.equal('FORBIDDEN');
                     expect(response.data.status).to.equal(0);
@@ -118,6 +117,17 @@ describe('Scores CLient', function () {
                     ]
                 }
             ];
+
+            moxios.stubRequest(urlLogin, {
+                status: 200,
+                statusText: 'OK',
+                response: {
+                    authToken: 'cnHgUZ/M0x5JG9T7KqDQSQ==\n',
+                    status: 1,
+                    statusMessage: 'Success',
+                    reqToken: 'TiD0lNdt0H6hhhsy75R8wXA3MNYH6wDBXvcKRCU5SG8a3Wb7zQQZWmoLaALApEnAvmfI1TftI1zJ\nU1SCTEC9vK843mCcvSrN/iMNGMBai0Q=\n'
+                }
+            });
 
             moxios.stubRequest(urlSubject, {
                 response: {

@@ -11,9 +11,7 @@ describe('Applicant Journey CLient', function () {
         argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv,
         clientAPI = {
-            name: 'AJAPI',
-            path: 'api/v2/applicant_journey',
-            data: 'data'
+            path: 'api/v2/applicant_journey'
         };
 
     before(() => {
@@ -49,7 +47,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.login(clientAPI, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.login(data.APIKey, data.hostname_AJ).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data.authToken).to.equal('iQsyemeGaI3ThwETOlwFbg==\n');
@@ -74,7 +72,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.login(clientAPI, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.login(data.APIKey, data.hostname_AJ).then(response => {
                     expect(response.status).to.equal(401);
                     expect(response.statusText).to.equal('UNAUTHORIZED');
                     expect(response.data.statusCode).to.equal(401);
@@ -100,6 +98,19 @@ describe('Applicant Journey CLient', function () {
                     applicant: {},
                     application: "sdkExample"
                 };
+
+            moxios.stubRequest(urlLogin, {
+                status: 200,
+                statusText: 'OK',
+                response: {
+                    data: {
+                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
+                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
+                    },
+                    statusCode: 200,
+                    statusMessage: 'OK'
+                }
+            });
 
             moxios.stubRequest(urlStartSession, {
                 response: {

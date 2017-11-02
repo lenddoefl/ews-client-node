@@ -3,8 +3,6 @@ var fs = require('fs'),
     axios = require('axios'),
     admZip = require('adm-zip');
 
-var auth = {};
-
 function login(clientAPI, APIKey, hostname) {
     let url;
 
@@ -16,27 +14,24 @@ function login(clientAPI, APIKey, hostname) {
 
     return axios.post(url, {identifier: APIKey.identifier})
         .then(response => {
-            let authToken, reqToken, responseData, processedReqToken;
+            let auth, responseData, processedReqToken;
 
             responseData = response.data;
 
             if(clientAPI.data) {
-                authToken = responseData[clientAPI.data].authToken;
-                reqToken = responseData[clientAPI.data].reqToken;
+                auth = {
+                    authToken: responseData[clientAPI.data].authToken,
+                    reqToken: responseData[clientAPI.data].reqToken
+                };
             } else {
-                authToken = responseData.authToken;
-                reqToken = responseData.reqToken;
+                auth = {
+                    authToken: responseData.authToken,
+                    reqToken: responseData.reqToken
+                };
             }
 
-            if(authToken&&reqToken) {
-                auth[clientAPI.name] = {
-                    authToken: authToken,
-                    reqToken: reqToken
-                };
-
-                processedReqToken = processReqToken(APIKey, auth[clientAPI.name]);
-
-                if(!!auth[clientAPI.name]) auth[clientAPI.name].reqToken = processedReqToken;
+            if(auth.authToken && auth.reqToken) {
+                processedReqToken = processReqToken(APIKey, auth);
 
                 clientAPI.data?responseData[clientAPI.data].reqToken = processedReqToken:responseData.reqToken = processedReqToken;
 
@@ -134,10 +129,6 @@ function readFile(URLfile) {
     return contentFile;
 }
 
-function getTokens() {
-    return auth;
-}
-
 function generateURI(hostname, clientAPI, endpoint, params) {
     let url;
 
@@ -154,6 +145,5 @@ module.exports = {
     login: login,
     init: init,
     request: request,
-    getTokens: getTokens,
     generateURI: generateURI
 };
