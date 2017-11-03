@@ -19,8 +19,10 @@ module.exports = class AjApiClient {
         let url = generateURI(hostname, clientAPI.path, 'startSession');
         this.applicant = data.applicant;
 
-        return this.generalRequest(url, data, APIKey, hostname).then((response) => {
-            this.setUid(response.data.uid);
+        return this.generalRequest(url, data, APIKey, hostname).then(response => {
+            if(response.data.uid) {
+                this.setUid(response.data.uid);
+            }
             return response;
         });
     }
@@ -63,7 +65,12 @@ module.exports = class AjApiClient {
         let url = generateURI(hostname, clientAPI.path, 'resumeSession');
         data.uid = this.getUid();
 
-        return this.loginAndHandling(url, data, APIKey, hostname);
+        return this.loginAndHandling(url, data, APIKey, hostname).then(response => {
+            if(response.data.uid) {
+                this.setUid(response.data.uid);
+            }
+            return response;
+        });
     }
 
     init(data) {
@@ -153,7 +160,7 @@ module.exports = class AjApiClient {
                     return response.data;
                 })
                 .catch(() => {
-                    if(data.uid && !~url.indexOf('resumeSession')) {
+                    if(data.hasOwnProperty('uid') && !~url.indexOf('resumeSession')) {
                         return this.repeatRequestForEndpointWithUid(url, data, APIKey, hostname);
                     } else {
                         return this.repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname)
