@@ -16,61 +16,89 @@ module.exports = class AjApiClient {
     }
 
     startSession(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'startSession');
-        this.applicant = data.applicant;
+        const self = this;
+        let endpoint = 'startSession';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
+        self.applicant = data.applicant;
 
-        return this.generalRequest(url, data, APIKey, hostname).then(response => {
-            if(response.data.uid) {
-                this.setUid(response.data.uid);
-            }
-            return response;
-        });
+        return self.checkExistenceUid(!self.uid, endpoint)
+            .then(() => {
+                return self.generalRequest(url, data, APIKey, hostname).then(response => {
+                    if(response.data.uid) {
+                        self.setUid(response.data.uid);
+                    }
+                    return response;
+                });
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
     }
 
     finishSession(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'finishSession');
+        let endpoint = 'finishSession';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
         data.uid = this.getUid();
 
-        return this.generalRequest(url, data, APIKey, hostname);
+        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
     }
 
     finishStep(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'finishStep');
+        let endpoint = 'finishStep';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
         data.uid = this.getUid();
 
-        return this.generalRequest(url, data, APIKey, hostname);
+        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
     }
 
     createAttachment(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'createAttachment');
+        let endpoint = 'createAttachment';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
         data.uid = this.getUid();
 
-        return this.generalRequest(url, data, APIKey, hostname);
+        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
     }
 
     getApplication(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'getApplication');
+        let endpoint = 'getApplication';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
         data.uid = this.getUid();
 
-        return this.generalRequest(url, data, APIKey, hostname);
+        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
     }
 
     prefetchApplications(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'prefetchApplications');
+        const self = this;
+        let endpoint = 'prefetchApplications';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
 
-        return this.generalRequest(url, data, APIKey, hostname);
+        return self.checkExistenceUid(!self.uid, endpoint)
+            .then(() => {
+                return self.generalRequest(url, data, APIKey, hostname);
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
     }
 
     resumeSession(data, APIKey, hostname) {
-        let url = generateURI(hostname, clientAPI.path, 'resumeSession');
-        data.uid = this.getUid();
+        const self = this;
+        let endpoint = 'resumeSession';
+        let url = generateURI(hostname, clientAPI.path, endpoint);
+        data.uid = self.getUid();
 
-        return this.loginAndHandling(url, data, APIKey, hostname).then(response => {
-            if(response.data.uid) {
-                this.setUid(response.data.uid);
-            }
-            return response;
-        });
+        return self.checkExistenceUid(self.uid, endpoint)
+            .then(() => {
+                return self.loginAndHandling(url, data, APIKey, hostname).then(response => {
+                    if(response.data.uid) {
+                        self.setUid(response.data.uid);
+                    }
+                    return response;
+                });
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
     }
 
     init(data) {
@@ -110,7 +138,7 @@ module.exports = class AjApiClient {
                     return response.data;
                 })
                 .catch(() => {
-                    if(data.uid) {
+                    if(data.hasOwnProperty('uid')) {
                         return this.repeatRequestForEndpointWithUid(url, data, APIKey, hostname);
                     } else {
                         return this.repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname);
@@ -166,6 +194,29 @@ module.exports = class AjApiClient {
                         return this.repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname)
                     }
                 });
+        });
+    }
+
+    generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint) {
+        const self = this;
+
+        return self.checkExistenceUid(self.uid, endpoint)
+            .then(() => {
+                return self.generalRequest(url, data, APIKey, hostname);
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
+    }
+
+    checkExistenceUid(condition, endpoint) {
+        const self = this;
+        return new Promise(function (resolve, reject) {
+            if(condition) {
+                resolve();
+            } else {
+                reject(new Error(`Error. The value of the uid ${!self.uid?'does not exist':'exists'}. You can not send a request for ${endpoint}.`));
+            }
         });
     }
 };

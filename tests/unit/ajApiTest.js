@@ -464,6 +464,8 @@ describe('Applicant Journey CLient', function () {
                     }
                 };
 
+            ajModule.setUid('');
+
             moxios.stubRequest(urlLogin, {
                 status: 200,
                 statusText: 'OK',

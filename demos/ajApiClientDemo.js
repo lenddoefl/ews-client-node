@@ -17,10 +17,12 @@ ajModule.login(data.APIKey, data.hostname_AJ)
 
 ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
     .then(response => {
+         if(response) {
         console.log('Response calling startSession');
         console.log('Application hash: ' + response.data.applicationHash);
         console.log('Public Key: ' + response.data.publicKey);
         console.log('UID: ' + response.data.uid);
+}
     })
     .then(()=>{
         let dataForFinishStep = {
@@ -46,7 +48,9 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
             step: 'abGlobal'
         };
         ajModule.finishStep(dataForFinishStep, data.APIKey, data.hostname_AJ).then(response => {
-            console.log('Response calling finishStep', response);
+            if(response) {
+                console.log('Response calling finishStep', response);
+            }
         });
 
         let dataForCreateAttachment = {
@@ -97,7 +101,9 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
             size: 2217
         };
         ajModule.createAttachment(dataForCreateAttachment, data.APIKey, data.hostname_AJ).then(response => {
-            console.log('Response calling createAttachment', response);
+            if(response) {
+                console.log('Response calling createAttachment', response);
+            }
         });
 
         let dataForGetApplication = {
@@ -121,7 +127,9 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
             }
         };
         ajModule.getApplication(dataForGetApplication, data.APIKey, data.hostname_AJ).then(response => {
-            console.log('Response calling getApplication', response);
+            if(response) {
+                console.log('Response calling getApplication', response);
+            }
         });
 
         let dataForFinishSession = {
@@ -129,14 +137,20 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
         };
 
         ajModule.finishSession(dataForFinishSession, data.APIKey, data.hostname_AJ).then(response => {
-            console.log('Response calling finishSession', response);
+            if(response) {
+                console.log('Response calling finishSession', response);
+            }
+
         });
 
         let dataForResumeSession = {
             applicant: {}
         };
         ajModule.resumeSession(dataForResumeSession, data.APIKey, data.hostname_AJ).then(response => {
-            console.log('Response calling resumeSession', response);
+            if(response) {
+                console.log('Response calling resumeSession', response);
+            }
+
         });
 
         let dataForPrefetchApplications = {
@@ -145,6 +159,8 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
             }
         };
         ajModule.prefetchApplications(dataForPrefetchApplications, data.APIKey, data.hostname_AJ).then(response => {
-            console.log('Response calling prefetchApplications', response);
+            if(response) {
+                console.log('Response calling prefetchApplications', response);
+            }
         });
     });

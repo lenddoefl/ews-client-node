@@ -207,6 +207,8 @@ describe('Applicant Journey CLient', function() {
                 }
             };
 
+            ajModule.setUid('');
+
             ajModule.prefetchApplications(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
