@@ -28,14 +28,14 @@ In order to process the response it is necessary to write:
 
 ```
 <nameInstanceClass>.<nameEndpoint>(...)
-.then(response => {
-//If got error from server, then write
-if (response.data.errors) { ... }
-...
+    .then(response => {
+        //If got error from server, then write
+        if (response.data.errors) { ... }
+        ...
 
-//If got success response from server, then write
-if (response.data) { ... }
-})
+        //If got success response from server, then write
+        if (response.data) { ... }
+    })
 ```
 
 Where:
@@ -60,9 +60,10 @@ In order to process the response it is necessary to write:
 
 ```
 <nameInstanceClass>.<nameEndpoint>(...)
-.then(response => {
-if (response.data) { ... }
-...
+    .then(response => {
+        if (response.data) { ... }
+        ...
+})
 
 ```
 
