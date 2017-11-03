@@ -141,6 +141,19 @@ describe('Applicant Journey CLient', function () {
                     sequence: 0
                 };
 
+            moxios.stubRequest(urlLogin, {
+                status: 200,
+                statusText: 'OK',
+                response: {
+                    data: {
+                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
+                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
+                    },
+                    statusCode: 200,
+                    statusMessage: 'OK'
+                }
+            });
+
             moxios.stubRequest(urlFinishSession, {
                 response: {
                     data: {},
@@ -188,6 +201,19 @@ describe('Applicant Journey CLient', function () {
                     state: {},
                     step: 'abGlobal'
                 };
+
+            moxios.stubRequest(urlLogin, {
+                status: 200,
+                statusText: 'OK',
+                response: {
+                    data: {
+                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
+                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
+                    },
+                    statusCode: 200,
+                    statusMessage: 'OK'
+                }
+            });
 
             moxios.stubRequest(urlFinishStep, {
                 response: {
@@ -265,6 +291,19 @@ describe('Applicant Journey CLient', function () {
                     size: 2217
                 };
 
+            moxios.stubRequest(urlLogin, {
+                status: 200,
+                statusText: 'OK',
+                response: {
+                    data: {
+                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
+                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
+                    },
+                    statusCode: 200,
+                    statusMessage: 'OK'
+                }
+            });
+
             moxios.stubRequest(urlCreateAttachment, {
                 response: {
                     data: dataResponse,
@@ -321,6 +360,19 @@ describe('Applicant Journey CLient', function () {
                         version: '1.20'
                     }
                 };
+
+            moxios.stubRequest(urlLogin, {
+                status: 200,
+                statusText: 'OK',
+                response: {
+                    data: {
+                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
+                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
+                    },
+                    statusCode: 200,
+                    statusMessage: 'OK'
+                }
+            });
 
             moxios.stubRequest(urlGetApplication, {
                 response: {
