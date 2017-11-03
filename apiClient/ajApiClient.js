@@ -19,6 +19,7 @@ module.exports = class AjApiClient {
         const self = this;
         let endpoint = 'startSession';
         let url = generateURI(hostname, clientAPI.path, endpoint);
+
         self.applicant = data.applicant;
 
         return self.checkExistenceUid(!self.uid, endpoint)
@@ -38,6 +39,7 @@ module.exports = class AjApiClient {
     finishSession(data, APIKey, hostname) {
         let endpoint = 'finishSession';
         let url = generateURI(hostname, clientAPI.path, endpoint);
+
         data.uid = this.getUid();
 
         return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
@@ -46,6 +48,7 @@ module.exports = class AjApiClient {
     finishStep(data, APIKey, hostname) {
         let endpoint = 'finishStep';
         let url = generateURI(hostname, clientAPI.path, endpoint);
+
         data.uid = this.getUid();
 
         return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
@@ -54,6 +57,7 @@ module.exports = class AjApiClient {
     createAttachment(data, APIKey, hostname) {
         let endpoint = 'createAttachment';
         let url = generateURI(hostname, clientAPI.path, endpoint);
+
         data.uid = this.getUid();
 
         return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
@@ -62,6 +66,7 @@ module.exports = class AjApiClient {
     getApplication(data, APIKey, hostname) {
         let endpoint = 'getApplication';
         let url = generateURI(hostname, clientAPI.path, endpoint);
+
         data.uid = this.getUid();
 
         return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
@@ -85,6 +90,7 @@ module.exports = class AjApiClient {
         const self = this;
         let endpoint = 'resumeSession';
         let url = generateURI(hostname, clientAPI.path, endpoint);
+
         data.uid = self.getUid();
 
         return self.checkExistenceUid(self.uid, endpoint)
@@ -160,11 +166,11 @@ module.exports = class AjApiClient {
                             return response.data;
                         })
                         .catch(error => {
-                            return error.response;
+                            return error.response.data;
                         });
                 })
                 .catch(error => {
-                    return error.response;
+                    return error.response.data;
                 });
         });
     }
@@ -176,7 +182,7 @@ module.exports = class AjApiClient {
                     return response.data;
                 })
                 .catch(error => {
-                    return error.response;
+                    return error.response.data;
                 });
         });
     }
@@ -211,6 +217,7 @@ module.exports = class AjApiClient {
 
     checkExistenceUid(condition, endpoint) {
         const self = this;
+
         return new Promise(function (resolve, reject) {
             if(condition) {
                 resolve();

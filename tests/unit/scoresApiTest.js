@@ -181,8 +181,6 @@ describe('Scores CLient', function () {
                 ],
                 dataForCall = "2017-08-24 00:00:00";
 
-
-
             moxios.stubRequest(urlDateQuery, {
                 response: {
                     status: 1,

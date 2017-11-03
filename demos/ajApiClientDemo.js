@@ -18,11 +18,11 @@ ajModule.login(data.APIKey, data.hostname_AJ)
 ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
     .then(response => {
          if(response) {
-        console.log('Response calling startSession');
-        console.log('Application hash: ' + response.data.applicationHash);
-        console.log('Public Key: ' + response.data.publicKey);
-        console.log('UID: ' + response.data.uid);
-}
+            console.log('Response calling startSession');
+            console.log('Application hash: ' + response.data.applicationHash);
+            console.log('Public Key: ' + response.data.publicKey);
+            console.log('UID: ' + response.data.uid);
+         }
     })
     .then(()=>{
         let dataForFinishStep = {
@@ -140,7 +140,6 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
             if(response) {
                 console.log('Response calling finishSession', response);
             }
-
         });
 
         let dataForResumeSession = {
@@ -150,7 +149,6 @@ ajModule.startSession(dataForStartSession, data.APIKey, data.hostname_AJ)
             if(response) {
                 console.log('Response calling resumeSession', response);
             }
-
         });
 
         let dataForPrefetchApplications = {

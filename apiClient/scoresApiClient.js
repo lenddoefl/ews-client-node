@@ -50,14 +50,22 @@ module.exports = class ScoresApiClient {
     generalRequest(url, endpoint, data, APIKey, hostname) {
         if(!this.auth.authToken && !this.auth.reqToken) {
             return this.login(APIKey, hostname).then(() => {
-                return request(url, this.auth, data, endpoint).then(response => {
-                    return response.data;
-                });
+                return request(url, this.auth, data, endpoint)
+                    .then(response => {
+                        return response.data;
+                    })
+                    .catch(error => {
+                        return error.response;
+                    });
             });
         } else {
-            return request(url, this.auth, data, endpoint).then(response => {
-                return response.data;
-            });
+            return request(url, this.auth, data, endpoint)
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => {
+                    return error.response;
+                });
         }
     }
 };

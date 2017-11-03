@@ -24,6 +24,25 @@ Where:
 
 The demo authenticates to the Applicant Journey API and starts a new session.
 
+In order to process the response it is necessary to write:
+
+```
+<nameInstanceClass>.<nameEndpoint>(...)
+.then(response => {
+//If got error from server, then write
+if (response.data.errors) { ... }
+...
+
+//If got success response from server, then write
+if (response.data) { ... }
+})
+```
+
+Where:
+
+- `<nameEndpoint>` is the name of call endpoint (for example, startSession, finishStep and etc.).
+- `<nameInstanceClass>` is the name instance of the class AJ API Client.
+
 ## Scores API
 
 ```
@@ -36,6 +55,21 @@ Where:
 - `<pathToApiKey>` is the path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
 The demo authenticates to the Scores API and returns any subjects with ID numbers that match the query.
+
+In order to process the response it is necessary to write:
+
+```
+<nameInstanceClass>.<nameEndpoint>(...)
+.then(response => {
+if (response.data) { ... }
+...
+
+```
+
+Where:
+
+- `<nameEndpoint>` is the name of call endpoint (for example, dateQuery, subject).
+- `<nameInstanceClass>` is the name instance of the class Scores API Client.
 
 # Running the test
 
