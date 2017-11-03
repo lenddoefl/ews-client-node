@@ -153,7 +153,7 @@ module.exports = class AjApiClient {
                     return response.data;
                 })
                 .catch(() => {
-                    if(data.uid && ~url.indexOf('resumeSession')) {
+                    if(data.uid && !~url.indexOf('resumeSession')) {
                         return this.repeatRequestForEndpointWithUid(url, data, APIKey, hostname);
                     } else {
                         return this.repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname)
