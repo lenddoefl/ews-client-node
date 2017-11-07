@@ -82,7 +82,7 @@ module.exports = class AjApiClient {
                 return self.generalRequest(url, data, APIKey, hostname);
             })
             .catch(error => {
-                console.error(error.message);
+                return {data: {errors: error.message}};
             });
     }
 
@@ -103,7 +103,7 @@ module.exports = class AjApiClient {
                 });
             })
             .catch(error => {
-                console.error(error.message);
+                return {data: {errors: error.message}};
             });
     }
 
@@ -211,7 +211,7 @@ module.exports = class AjApiClient {
                 return self.generalRequest(url, data, APIKey, hostname);
             })
             .catch(error => {
-                console.error(error.message);
+                return {data: {errors: error.message}};
             });
     }
 
