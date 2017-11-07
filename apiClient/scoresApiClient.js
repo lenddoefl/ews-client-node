@@ -10,30 +10,34 @@ let clientAPI = {
 
 module.exports = class ScoresApiClient {
     constructor() {
+        this.APIKey = '';
+        this.hostname = '';
+
         this.auth = {};
     }
 
-    subject(data, APIKey, hostname) {
+    subject(data) {
         let endpoint = 'subjects';
-        let url = generateURI(hostname, clientAPI.path, 'subject', clientAPI.pathParams);
+        let url = this.generateURI('subject', clientAPI.pathParams);
 
-        return this.generalRequest(url, endpoint, data, APIKey, hostname);
+        return this.generalRequest(url, endpoint, data);
     }
 
-    dateQuery(data, APIKey, hostname) {
+    dateQuery(data) {
         let endpoint = 'dateQuery';
-        let url = generateURI(hostname, clientAPI.path, endpoint, clientAPI.pathParams);
+        let url = this.generateURI(endpoint, clientAPI.pathParams);
 
-        return this.generalRequest(url, endpoint, data, APIKey, hostname);
+        return this.generalRequest(url, endpoint, data);
     }
 
     init(data) {
-        data.clientAPI = 'Scores';
-        return ews.init(data);
+        let enterData = ews.init(data);
+        this.APIKey = enterData.APIKey;
+        this.hostname = enterData.hostname;
     }
 
-    login(APIKey, hostname) {
-        return login(clientAPI, APIKey, hostname).then(response => {
+    login() {
+        return login(clientAPI, this.APIKey, this.hostname).then(response => {
             this.auth = {
                 authToken: response.authToken,
                 reqToken: response.reqToken
@@ -43,13 +47,13 @@ module.exports = class ScoresApiClient {
         });
     }
 
-    generateURI(hostname, clientAPI, endpoint, params) {
-        return generateURI(hostname, clientAPI, endpoint, params);
+    generateURI(endpoint, params) {
+        return generateURI(this.hostname, clientAPI.path, endpoint, params);
     }
 
-    generalRequest(url, endpoint, data, APIKey, hostname) {
+    generalRequest(url, endpoint, data) {
         if(!this.auth.authToken && !this.auth.reqToken) {
-            return this.login(APIKey, hostname).then(() => {
+            return this.login().then(() => {
                 return request(url, this.auth, data, endpoint)
                     .then(response => {
                         return response.data;

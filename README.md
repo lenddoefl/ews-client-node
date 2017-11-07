@@ -11,6 +11,12 @@ npm install ews-client-node --save
 ```
 
 # Running the Demo
+
+ajApiClientDemo and scoresApiDemo are executable files that can show you how developers can interact with this client.
+
+ajApiClient and scoresApiClient classes provide simple access to Applicant Journey API and Scores API.
+In order to use them you need to require `ews-client-node` in your document and then create an instance of ajApiClient and scoresApiClient class.
+
 ## Applicant Journey API
 
 ```
@@ -24,7 +30,28 @@ Where:
 
 The demo authenticates to the Applicant Journey API and starts a new session.
 
-In order to process the response it is necessary to write:
+### Main functions
+
+First of all, you first need to set the values (hostname, path to API keys) for an instance of ajApiClient.
+For this you need to call a function `init`:
+```
+<nameInstanceClass>.init({hostname: <hostname>, pathFolder: <pathToApiKey>})
+```
+
++ startSession(data)
++ finishSession(data)
++ finishStep(data)
++ createAttachment(data)
++ getApplication(data)
++ prefetchApplications(data)
++ resumeSession(data)
++ login()
+
+Where:
+
+- `<data>` are the data for call current endpoint.
+
+### In order to process the response it is necessary to write:
 
 ```
 <nameInstanceClass>.<nameEndpoint>(...)
@@ -56,7 +83,23 @@ Where:
 
 The demo authenticates to the Scores API and returns any subjects with ID numbers that match the query.
 
-In order to process the response it is necessary to write:
+### Main functions
+
+First of all, you first need to set the values (hostname, path to API keys) for an instance of scoresApiClient.
+For this you need to call a function `init`:
+```
+<nameInstanceClass>.init({hostname: <hostname>, pathFolder: <pathToApiKey>}).
+```
+
++ subject(data)
++ dateQuery(data)
++ login()
+
+Where:
+
+- `<data>` are the data for call current endpoint.
+
+### In order to process the response it is necessary to write:
 
 ```
 <nameInstanceClass>.<nameEndpoint>(...)

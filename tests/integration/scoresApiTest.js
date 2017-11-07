@@ -6,20 +6,19 @@ var module = require('../../index.js'),
 
 describe('Scores CLient', function () {
     this.timeout(5000);
-    let data,
-        argvHostname = optimist.demand('hostname').argv,
+    let argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv;
 
     before(() => {
-        data = scoresModule.init({
-            hostname_Scores: argvHostname.hostname,
+        scoresModule.init({
+            hostname: argvHostname.hostname,
             pathFolder: argvPathToApiKey.pathToApiKey
         });
     });
 
     describe('Call login', () => {
         it('Should come success response with status 1, status message Success', done => {
-            scoresModule.login(data.APIKey, data.hostname_Scores).then(response => {
+            scoresModule.login().then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 
@@ -41,7 +40,7 @@ describe('Scores CLient', function () {
                 }
             ];
 
-            scoresModule.subject(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
+            scoresModule.subject(dataForCall).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 
@@ -54,7 +53,7 @@ describe('Scores CLient', function () {
         it('Should come success response with status 1, status message Success', done => {
             let dataForCall = "2017-11-02 00:00:00";
 
-            scoresModule.dateQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
+            scoresModule.dateQuery(dataForCall).then(response => {
                 expect(response.status).to.equal(1);
                 expect(response.statusMessage).to.equal('Success');
 

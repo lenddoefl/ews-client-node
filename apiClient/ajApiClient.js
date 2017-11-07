@@ -10,94 +10,95 @@ let clientAPI = {
 
 module.exports = class AjApiClient {
     constructor() {
+        this.APIKey = '';
+        this.hostname = '';
+
         this.uid = '';
-        this.applicant = {};
         this.auth = {};
+
+        this.applicant = {};
     }
 
-    startSession(data, APIKey, hostname) {
-        const self = this;
+    startSession(data) {
         let endpoint = 'startSession';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
+        let url = this.generateURI(endpoint);
 
-        self.applicant = data.applicant;
+        this.applicant = data.applicant;
 
-        return self.checkExistenceUid(!self.uid, endpoint)
+        return this.checkExistenceUid(!this.uid, endpoint)
             .then(() => {
-                return self.generalRequest(url, data, APIKey, hostname).then(response => {
+                return this.generalRequest(url, data).then(response => {
                     if(response.data.uid) {
-                        self.setUid(response.data.uid);
+                        this.setUid(response.data.uid);
                     }
                     return response;
                 });
-            })
-            .catch(error => {
-                console.error(error.message);
-            });
-    }
-
-    finishSession(data, APIKey, hostname) {
-        let endpoint = 'finishSession';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
-
-        data.uid = this.getUid();
-
-        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
-    }
-
-    finishStep(data, APIKey, hostname) {
-        let endpoint = 'finishStep';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
-
-        data.uid = this.getUid();
-
-        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
-    }
-
-    createAttachment(data, APIKey, hostname) {
-        let endpoint = 'createAttachment';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
-
-        data.uid = this.getUid();
-
-        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
-    }
-
-    getApplication(data, APIKey, hostname) {
-        let endpoint = 'getApplication';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
-
-        data.uid = this.getUid();
-
-        return this.generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint);
-    }
-
-    prefetchApplications(data, APIKey, hostname) {
-        const self = this;
-        let endpoint = 'prefetchApplications';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
-
-        return self.checkExistenceUid(!self.uid, endpoint)
-            .then(() => {
-                return self.generalRequest(url, data, APIKey, hostname);
             })
             .catch(error => {
                 return {data: {errors: error.message}};
             });
     }
 
-    resumeSession(data, APIKey, hostname) {
-        const self = this;
-        let endpoint = 'resumeSession';
-        let url = generateURI(hostname, clientAPI.path, endpoint);
+    finishSession(data) {
+        let endpoint = 'finishSession';
+        let url = this.generateURI(endpoint);
 
-        data.uid = self.getUid();
+        data.uid = this.getUid();
 
-        return self.checkExistenceUid(self.uid, endpoint)
+        return this.generalRequestWithCheckUid(url, data, endpoint);
+    }
+
+    finishStep(data) {
+        let endpoint = 'finishStep';
+        let url = this.generateURI(endpoint);
+
+        data.uid = this.getUid();
+
+        return this.generalRequestWithCheckUid(url, data, endpoint);
+    }
+
+    createAttachment(data) {
+        let endpoint = 'createAttachment';
+        let url = this.generateURI(endpoint);
+
+        data.uid = this.getUid();
+
+        return this.generalRequestWithCheckUid(url, data, endpoint);
+    }
+
+    getApplication(data) {
+        let endpoint = 'getApplication';
+        let url = this.generateURI(endpoint);
+
+        data.uid = this.getUid();
+
+        return this.generalRequestWithCheckUid(url, data, endpoint);
+    }
+
+    prefetchApplications(data) {
+        let endpoint = 'prefetchApplications';
+        let url = this.generateURI(endpoint);
+
+        return this.checkExistenceUid(!this.uid, endpoint)
             .then(() => {
-                return self.loginAndHandling(url, data, APIKey, hostname).then(response => {
+                return this.generalRequest(url, data);
+            })
+            .catch(error => {
+                return {data: {errors: error.message}};
+            });
+    }
+
+    resumeSession(data) {
+        let endpoint = 'resumeSession';
+        let url = this.generateURI(endpoint);
+
+        data.uid = this.getUid();
+
+        return this.checkExistenceUid(this.uid, endpoint)
+            .then(() => {
+                return this.loginAndHandling(url, data).then(response => {
                     if(response.data.uid) {
-                        self.setUid(response.data.uid);
+                        this.setUid(response.data.uid);
                     }
                     return response;
                 });
@@ -108,12 +109,13 @@ module.exports = class AjApiClient {
     }
 
     init(data) {
-        data.clientAPI = 'AJ';
-        return ews.init(data);
+        let enterData = ews.init(data);
+        this.APIKey = enterData.APIKey;
+        this.hostname = enterData.hostname;
     }
 
-    login(APIKey, hostname) {
-        return login(clientAPI, APIKey, hostname).then(response => {
+    login() {
+        return login(clientAPI, this.APIKey, this.hostname).then(response => {
             this.auth = {
                 authToken: response.data.authToken,
                 reqToken: response.data.reqToken
@@ -123,8 +125,8 @@ module.exports = class AjApiClient {
         });
     }
 
-    generateURI(hostname, clientAPI, endpoint, params) {
-        return generateURI(hostname, clientAPI, endpoint, params);
+    generateURI(endpoint) {
+        return generateURI(this.hostname, clientAPI.path, endpoint);
     }
 
     getUid() {
@@ -135,9 +137,9 @@ module.exports = class AjApiClient {
         this.uid = data;
     }
 
-    generalRequest(url, data, APIKey, hostname) {
+    generalRequest(url, data) {
         if(!this.auth.authToken && !this.auth.reqToken) {
-            return this.loginAndHandling(url, data, APIKey, hostname);
+            return this.loginAndHandling(url, data);
         } else {
             return request(url, this.auth, data)
                 .then(response => {
@@ -145,21 +147,21 @@ module.exports = class AjApiClient {
                 })
                 .catch(() => {
                     if(data.hasOwnProperty('uid')) {
-                        return this.repeatRequestForEndpointWithUid(url, data, APIKey, hostname);
+                        return this.repeatRequestForEndpointWithUid(url, data);
                     } else {
-                        return this.repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname);
+                        return this.repeatRequestForEndpointWithoutUid(url, data);
                     }
                 });
         }
     }
 
-    repeatRequestForEndpointWithUid(url, data, APIKey, hostname) {
-        return this.login(APIKey, hostname).then(() => {
+    repeatRequestForEndpointWithUid(url, data) {
+        return this.login().then(() => {
             let dataForResumeSession = {
                 applicant: this.applicant
             };
 
-            return this.resumeSession(dataForResumeSession, APIKey, hostname)
+            return this.resumeSession(dataForResumeSession)
                 .then(() => {
                     return request(url, this.auth, data)
                         .then(response => {
@@ -175,8 +177,8 @@ module.exports = class AjApiClient {
         });
     }
 
-    repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname) {
-        return this.login(APIKey, hostname).then(() => {
+    repeatRequestForEndpointWithoutUid(url, data) {
+        return this.login().then(() => {
             return request(url, this.auth, data)
                 .then(response => {
                     return response.data;
@@ -187,28 +189,26 @@ module.exports = class AjApiClient {
         });
     }
 
-    loginAndHandling(url, data, APIKey, hostname) {
-        return this.login(APIKey, hostname).then(() => {
+    loginAndHandling(url, data) {
+        return this.login().then(() => {
             return request(url, this.auth, data)
                 .then(response => {
                     return response.data;
                 })
                 .catch(() => {
                     if(data.hasOwnProperty('uid') && !~url.indexOf('resumeSession')) {
-                        return this.repeatRequestForEndpointWithUid(url, data, APIKey, hostname);
+                        return this.repeatRequestForEndpointWithUid(url, data);
                     } else {
-                        return this.repeatRequestForEndpointWithoutUid(url, data, APIKey, hostname)
+                        return this.repeatRequestForEndpointWithoutUid(url, data)
                     }
                 });
         });
     }
 
-    generalRequestWithCheckUid(url, data, APIKey, hostname, endpoint) {
-        const self = this;
-
-        return self.checkExistenceUid(self.uid, endpoint)
+    generalRequestWithCheckUid(url, data, endpoint) {
+        return this.checkExistenceUid(this.uid, endpoint)
             .then(() => {
-                return self.generalRequest(url, data, APIKey, hostname);
+                return this.generalRequest(url, data);
             })
             .catch(error => {
                 return {data: {errors: error.message}};
@@ -216,8 +216,7 @@ module.exports = class AjApiClient {
     }
 
     checkExistenceUid(condition, endpoint) {
-        const self = this;
-
+        let self = this;
         return new Promise(function (resolve, reject) {
             if(condition) {
                 resolve();

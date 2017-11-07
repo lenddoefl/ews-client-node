@@ -11,16 +11,15 @@ describe('Scores CLient', function () {
         argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv,
         clientAPI = {
-            path: 'api/v1/scores',
             pathParams: 'auth_type=1'
         };
 
     before(() => {
         data = scoresModule.init({
-            hostname_Scores: argvHostname.hostname,
+            hostname: argvHostname.hostname,
             pathFolder: argvPathToApiKey.pathToApiKey
         });
-        urlLogin = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'login', clientAPI.pathParams);
+        urlLogin = scoresModule.generateURI('login', clientAPI.pathParams);
     });
 
     beforeEach(() => {
@@ -45,7 +44,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.login(data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.login().then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
                     expect(response.authToken).to.equal('cnHgUZ/M0x5JG9T7KqDQSQ==\n');
@@ -66,7 +65,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.login(data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.login().then(response => {
                     expect(response.status).to.equal(403);
                     expect(response.statusText).to.equal('FORBIDDEN');
                     expect(response.data.status).to.equal(0);
@@ -80,7 +79,7 @@ describe('Scores CLient', function () {
 
     describe('Call subject', () => {
         it('Should come success response with status 1, status message Success, correct subjects', done => {
-            let urlSubject = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'subject', clientAPI.pathParams),
+            let urlSubject = scoresModule.generateURI('subject', clientAPI.pathParams),
                 subjects = [
                     {
                         answerReliabilityFlag: "Green",
@@ -138,7 +137,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.subject(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.subject(dataForCall).then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
                     expect(response.subjects).to.be.an('array');
@@ -152,7 +151,7 @@ describe('Scores CLient', function () {
 
     describe('Call dateQuery', () => {
         it('Should come success response with status 1, status message Success, correct subjects', done => {
-            let urlDateQuery = scoresModule.generateURI(data.hostname_Scores, clientAPI.path, 'dateQuery', clientAPI.pathParams),
+            let urlDateQuery = scoresModule.generateURI('dateQuery', clientAPI.pathParams),
                 subjects = [
                     {
                         answerReliabilityFlag: "Green",
@@ -190,7 +189,7 @@ describe('Scores CLient', function () {
             });
 
             moxios.wait(function () {
-                scoresModule.dateQuery(dataForCall, data.APIKey, data.hostname_Scores).then(response => {
+                scoresModule.dateQuery(dataForCall).then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
                     expect(response.subjects).to.be.an('array');

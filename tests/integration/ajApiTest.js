@@ -7,20 +7,19 @@ var module = require('../../index.js'),
 
 describe('Applicant Journey CLient', function() {
     this.timeout(5000);
-    let data,
-        argvHostname = optimist.demand('hostname').argv,
+    let argvHostname = optimist.demand('hostname').argv,
         argvPathToApiKey = optimist.demand('pathToApiKey').argv;
 
     before(() => {
-        data = ajModule.init({
-            hostname_AJ: argvHostname.hostname,
+        ajModule.init({
+            hostname: argvHostname.hostname,
             pathFolder: argvPathToApiKey.pathToApiKey
         });
     });
 
     describe('Call login', () => {
         it('Should come success response with status code 200, status message OK', done => {
-            ajModule.login(data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.login().then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -35,7 +34,7 @@ describe('Applicant Journey CLient', function() {
                 applicant: {},
                 application: "sdkExample"
             };
-            ajModule.startSession(dataForCallStartSession, data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.startSession(dataForCallStartSession).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -50,7 +49,7 @@ describe('Applicant Journey CLient', function() {
                 sequence: 0
             };
 
-            ajModule.finishSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.finishSession(dataForCall).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -84,7 +83,7 @@ describe('Applicant Journey CLient', function() {
                 step: 'abGlobal'
             };
 
-            ajModule.finishStep(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.finishStep(dataForCall).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -142,7 +141,7 @@ describe('Applicant Journey CLient', function() {
                 sha1Hash: 'a658db8045c171c85e42a257654bad0ebfec1ce1',
                 size: 2217
             };
-           ajModule.createAttachment(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+           ajModule.createAttachment(dataForCall).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -174,7 +173,7 @@ describe('Applicant Journey CLient', function() {
                 }
             };
 
-            ajModule.getApplication(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.getApplication(dataForCall).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -189,7 +188,7 @@ describe('Applicant Journey CLient', function() {
                 applicant: {}
             };
 
-            ajModule.resumeSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.resumeSession(dataForCall).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 
@@ -209,7 +208,7 @@ describe('Applicant Journey CLient', function() {
 
             ajModule.setUid('');
 
-            ajModule.prefetchApplications(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+            ajModule.prefetchApplications(dataForCall).then(response => {
                 expect(response.statusCode).to.equal(200);
                 expect(response.statusMessage).to.equal('OK');
 

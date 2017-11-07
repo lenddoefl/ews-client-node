@@ -7,19 +7,16 @@ var module = require('../../index.js'),
 
 describe('Applicant Journey CLient', function () {
     this.timeout(5000);
-    let data, urlLogin,
+    let urlLogin,
         argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv,
-        clientAPI = {
-            path: 'api/v2/applicant_journey'
-        };
+        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
 
     before(() => {
-        data = ajModule.init({
-            hostname_AJ: argvHostname.hostname,
+        ajModule.init({
+            hostname: argvHostname.hostname,
             pathFolder: argvPathToApiKey.pathToApiKey
         });
-        urlLogin = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'login');
+        urlLogin = ajModule.generateURI('login');
     });
 
     beforeEach(() => {
@@ -47,7 +44,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.login(data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.login().then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data.authToken).to.equal('iQsyemeGaI3ThwETOlwFbg==\n');
@@ -72,7 +69,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.login(data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.login().then(response => {
                     expect(response.status).to.equal(401);
                     expect(response.statusText).to.equal('UNAUTHORIZED');
                     expect(response.data.statusCode).to.equal(401);
@@ -88,7 +85,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call startSession', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlStartSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'startSession'),
+            let urlStartSession = ajModule.generateURI('startSession'),
                 dataResponse = {
                         applicationHash: '64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0',
                         publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlc2BS063TWMy4O/tMRaePswCE8mBZO+zv4p3xpGYARPAgCQ/djIiNo9IvKF+aI91yKDoNiNCQaD61fuiOEtpwglq08+Kijraa5TtWDdTu29bYQI+AMQosskXOsnj5GprHTnpyjthTmM3xNVgncVKKbJEV6657mtdl5zh0brchVd66wSNsQXtkpbW0yw15Ek2H4orqcJoFtOLz63OTPwlf24VpkHnrquY7MDlFaTkpnHaUtEDfgVUhA5w90DdSbxICWWlDu49tMHhUnJ+ziD/h3QNG4NU5nJUIlRL/IXByC9vTzyCXEEoFVrlBQLz8o9xyYiLHv+fE6+Onx771wRKQIDAQAB',
@@ -121,7 +118,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.startSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.startSession(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
@@ -136,7 +133,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call finishSession', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlFinishSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'finishSession'),
+            let urlFinishSession = ajModule.generateURI('finishSession'),
                 dataForCall = {
                     sequence: 0
                 };
@@ -163,7 +160,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.finishSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.finishSession(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
@@ -178,7 +175,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call finishStep', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlFinishStep = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'finishStep'),
+            let urlFinishStep = ajModule.generateURI('finishStep'),
                 dataForCall = {
                     applicant: {},
                     device: {
@@ -224,7 +221,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.finishStep(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.finishStep(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
@@ -239,7 +236,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call createAttachment', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlCreateAttachment = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'createAttachment'),
+            let urlCreateAttachment = ajModule.generateURI('createAttachment'),
                 dataResponse = {
                     attachmentUid: '5c4e3282412e4548bd3194e8eac52099'
                 },
@@ -313,7 +310,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.createAttachment(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.createAttachment(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
@@ -329,7 +326,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call getApplication', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlGetApplication = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'getApplication'),
+            let urlGetApplication = ajModule.generateURI('getApplication'),
                 completedSteps=['completedSteps'],
                 dataResponse = {
                     applicant: {},
@@ -383,7 +380,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.getApplication(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.getApplication(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
@@ -404,7 +401,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call resumeSession', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlResumeSession = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'resumeSession'),
+            let urlResumeSession = ajModule.generateURI('resumeSession'),
                 dataResponse = {
                     uid: ajModule.getUid(),
                     publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw9wCxActD6cQtwPuKTgGrxQ+tAqv2FQQaMy+99FPLLn2JnApxcWCavoaPRCmWJU50aHjXxtK4HG0/oN6xKjPwtm7TU0O/y4iL0M3bs4a9TpL/vErf68m/LA+Qd0knP8fCwjOQTucCyuOLzat1rW08feee0o1VOvJqY6U7ewonWJEzOsK4KewKhzHEY+QWJrkI1H5GZIC2oCH5+LdxkeU/w5lL/MYVfWclUpsdH0KiWadEHTw3hzXQKaTeDZb6OPUC+2CFWUjaIS2CS3/KSonzbXtbTCWcmCjb6dLKkQAMYkXLw3/WHGfDwiqzsYOznhtRPNP49Bq12bRMOr6Nch8rwIDAQAB'
@@ -435,7 +432,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.resumeSession(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.resumeSession(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
@@ -450,7 +447,7 @@ describe('Applicant Journey CLient', function () {
     describe('Call prefetchApplications', () => {
 
         it('Should come success response with status code 200, status message OK, correct data', done => {
-            let urlPrefetchApplications = ajModule.generateURI(data.hostname_AJ, clientAPI.path, 'prefetchApplications'),
+            let urlPrefetchApplications = ajModule.generateURI('prefetchApplications'),
                 dataResponse = {
                     sdkExample: {
                         applicationHash: '64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0',
@@ -488,7 +485,7 @@ describe('Applicant Journey CLient', function () {
             });
 
             moxios.wait(function () {
-                ajModule.prefetchApplications(dataForCall, data.APIKey, data.hostname_AJ).then(response => {
+                ajModule.prefetchApplications(dataForCall).then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
                     expect(response.data).to.be.an('object');
