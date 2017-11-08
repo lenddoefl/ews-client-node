@@ -56,7 +56,7 @@ Where:
 ```
 <nameInstanceClass>.<nameEndpoint>(...)
     .then(response => {
-        //If got error from server, then write
+        //If got error then write
         if (response.data.errors) { ... }
         ...
 
