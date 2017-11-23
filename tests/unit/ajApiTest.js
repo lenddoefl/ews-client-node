@@ -7,19 +7,24 @@ var module = require('../../index.js'),
 
 describe('Applicant Journey CLient', function () {
     this.timeout(5000);
-    let urlLogin,
-        argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv;
+    let urlLogin, tokens;
 
     before(() => {
-        ajModule.init({
-            hostname: argvHostname.hostname,
-            pathFolder: argvPathToApiKey.pathToApiKey
-        });
+        ajModule.hostname = "uat-external.eflglobal.com";
+        ajModule.APIKey = {
+            identifier: '1cc04a589caf6332f7148e991e654f7e005cb29f5a622af865b9b27b78352d00',
+            encryptionKey: '1bbae33fc4a8c445',
+            decryptionKey: 'ac8adbb14b3bdd6e'
+        };
+
         urlLogin = ajModule.generateURI('login');
     });
 
     beforeEach(() => {
+        tokens = {
+            authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
+            reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
+        };
         moxios.install();
     });
 
@@ -34,10 +39,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -47,7 +49,7 @@ describe('Applicant Journey CLient', function () {
                 ajModule.login().then(response => {
                     expect(response.statusCode).to.equal(200);
                     expect(response.statusMessage).to.equal('OK');
-                    expect(response.data.authToken).to.equal('iQsyemeGaI3ThwETOlwFbg==\n');
+                    expect(response.data.authToken).to.equal(tokens.authToken);
                     expect(response.data.reqToken).to.equal('0CZC7AyEoW3JlgGBMnz4d5vGoyMGFkD1Vx+PFf/m9nnLLpdx8/YR8d/J8e+vgtzmCU5x/i/U2NwrdIVxKL1G84ty1l6IrHKOn43hAIsNIgI=');
 
                     done();
@@ -100,10 +102,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -142,10 +141,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -203,10 +199,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -292,10 +285,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -362,10 +352,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -414,10 +401,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }
@@ -467,10 +451,7 @@ describe('Applicant Journey CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    data: {
-                        authToken: 'iQsyemeGaI3ThwETOlwFbg==\n',
-                        reqToken: 'ElA9MqO2eAAIASM2uWU4pxn7iLlTWOlB3VzrdTzzWCSpA33ruX4Nsu5gGZtl5aay+TCoGDPD/agc\n3OHme+eETIvQYGB8HepmiYNuvXN35pA=\n'
-                    },
+                    data: tokens,
                     statusCode: 200,
                     statusMessage: 'OK'
                 }

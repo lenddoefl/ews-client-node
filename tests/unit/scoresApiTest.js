@@ -7,18 +7,22 @@ var module = require('../../index.js'),
 
 describe('Scores CLient', function () {
     this.timeout(5000);
-    let data, urlLogin,
-        argvHostname = optimist.demand('hostname').argv,
-        argvPathToApiKey = optimist.demand('pathToApiKey').argv,
+    let urlLogin,
+        tokens = {
+            authToken: 'cnHgUZ/M0x5JG9T7KqDQSQ==\n',
+            reqToken: 'TiD0lNdt0H6hhhsy75R8wXA3MNYH6wDBXvcKRCU5SG8a3Wb7zQQZWmoLaALApEnAvmfI1TftI1zJ\nU1SCTEC9vK843mCcvSrN/iMNGMBai0Q=\n'
+        },
         clientAPI = {
             pathParams: 'auth_type=1'
         };
 
     before(() => {
-        data = scoresModule.init({
-            hostname: argvHostname.hostname,
-            pathFolder: argvPathToApiKey.pathToApiKey
-        });
+        scoresModule.hostname = "uat-external.eflglobal.com";
+        scoresModule.APIKey = {
+            identifier: 'a809714fd73513891e6b3aa18a631cd8c4a7446437397536387487e8ed8eaee2',
+            encryptionKey: '70f665f626b19d50',
+            decryptionKey: 'e8fdd1c66db7f1c0'
+        };
         urlLogin = scoresModule.generateURI('login', clientAPI.pathParams);
     });
 
@@ -36,10 +40,10 @@ describe('Scores CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    authToken: 'cnHgUZ/M0x5JG9T7KqDQSQ==\n',
+                    authToken: tokens.authToken,
                     status: 1,
                     statusMessage: 'Success',
-                    reqToken: 'TiD0lNdt0H6hhhsy75R8wXA3MNYH6wDBXvcKRCU5SG8a3Wb7zQQZWmoLaALApEnAvmfI1TftI1zJ\nU1SCTEC9vK843mCcvSrN/iMNGMBai0Q=\n'
+                    reqToken: tokens.reqToken
                 }
             });
 
@@ -47,7 +51,7 @@ describe('Scores CLient', function () {
                 scoresModule.login().then(response => {
                     expect(response.status).to.equal(1);
                     expect(response.statusMessage).to.equal('Success');
-                    expect(response.authToken).to.equal('cnHgUZ/M0x5JG9T7KqDQSQ==\n');
+                    expect(response.authToken).to.equal(tokens.authToken);
                     expect(response.reqToken).to.equal('BfzYwopfG7ji4vk4B4NIkgfnbZjUENe7wzl7I9qqFYHCHYt2ZmV9VADeQJ1IkcTrsVyUKI4+jgReecAgXscqMGIvSPRBDwyrpeTxnY2TN40=');
 
                     done();
@@ -121,10 +125,10 @@ describe('Scores CLient', function () {
                 status: 200,
                 statusText: 'OK',
                 response: {
-                    authToken: 'cnHgUZ/M0x5JG9T7KqDQSQ==\n',
+                    authToken: tokens.authToken,
                     status: 1,
                     statusMessage: 'Success',
-                    reqToken: 'TiD0lNdt0H6hhhsy75R8wXA3MNYH6wDBXvcKRCU5SG8a3Wb7zQQZWmoLaALApEnAvmfI1TftI1zJ\nU1SCTEC9vK843mCcvSrN/iMNGMBai0Q=\n'
+                    reqToken: tokens.reqToken
                 }
             });
 
