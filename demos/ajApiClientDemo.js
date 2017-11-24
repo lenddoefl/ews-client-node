@@ -24,7 +24,7 @@ ajModule.startSession(dataForStartSession)
             console.log('UID: ' + response.data.uid);
          }
     })
-    .then(()=>{
+    .then(() => {
         let dataForFinishStep = {
             applicant: {},
             device: {
