@@ -13,7 +13,7 @@ For a manual installation, complete the following steps:
 1. `git clone https://github.com/eflglobal/ews-client-node.git`.
 2. Install packages with the help of the command `npm install` to install the necessary packages for further run demos and tests.
 
-To use requests to the APIs, you can copy the files from `ews-client-node/apiClient` into your project. But you should be sure that the packages (dependencies and devDependencies) from the `ews-client-node/package.json` file are installed in your project.
+To use requests to the APIs, you can copy the files from `ews-client-node/apiClient` into your project. But you should be sure that the packages (`dependencies` and `devDependencies`) from the `ews-client-node/package.json` file are installed in your project.
 
 ## Usage
 ### Applicant Journey API
@@ -26,7 +26,7 @@ The ajApiClient constructor has two main properties:
 The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
 
 An example of the use of this class is demonstrated in `ews-client-node/demos/ajApiClientDemo` file.
-The [`further`](https://github.com/eflglobal/ews-client-node#applicant-journey-api) will describe in more detail how to use ajApiClient.
+The [`further`](https://github.com/eflglobal/ews-client-node#applicant-journey-api-1) will describe in more detail how to use ajApiClient.
 
 #### Sending AJ API Requests
 
@@ -60,10 +60,6 @@ Method connects to [`createAttachment`](https://developers.eflglobal.com/applica
 Arguments:
 
 - `data`: contents of the `data` for call endpoint.
-
-### Scores API
-
-To send requests to the Scores API, use the the `scoresApiClient` class.
 
 ##### `getApplication`
 Method connects to [`getApplication`](https://developers.eflglobal.com/applicant-journey-api/endpoints/getApplication.html) endpoint and returns JSON response.
@@ -120,7 +116,7 @@ The scoresApiClient constructor has two main properties:
 The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
 
 An example of the use of this class is demonstrated in `ews-client-node/demos/scoresApiClientDemo` file.
-The [`following`](https://github.com/eflglobal/ews-client-node#scores-api) will describe in more detail how to use scoresApiClient.
+The [`further`](https://github.com/eflglobal/ews-client-node#scores-api-2) will describe in more detail how to use scoresApiClient.
 
 #### Sending Scores API Requests
 
@@ -164,11 +160,11 @@ See the [`documentation`](https://developers.eflglobal.com/scores-responses/) fo
 
 ## Additional Features
 ### Demos
-In `demos` directory you can find demo files (`demo/AjApiClientDemo.js`, `demos/ScoresApiClientDemo.js`). They show how to access methods of both client classes.
+In `demos` directory you can find demo files (`demos/AjApiClientDemo.js`, `demos/ScoresApiClientDemo.js`). They show how to access methods of both client classes.
 
 #### Applicant Journey API
 
-The demo authenticates to the Applicant Journey API and starts a new session.
+The demo authenticates to the [`Applicant Journey API`](https://developers.eflglobal.com/applicant-journey-api/) and starts a new session.
 
 ##### Run the AJ API Client Demo
 
@@ -258,7 +254,7 @@ ajModule.startSession(dataForStartSession)
 
 #### Scores API
 
-The demo authenticates to the Scores API and returns any subjects with ID numbers that match the query.
+The demo authenticates to the [`Scores API`](https://developers.eflglobal.com/scores-api/).
 
 ##### Run the Scores API Client Demo
 
