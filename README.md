@@ -20,10 +20,10 @@ To use requests to the APIs, you can copy the files from `ews-client-node/apiCli
 To send requests to the Applicant Journey API use the `ajApiClient` class.
 The ajApiClient constructor has two main properties:
 
-- `hostname`: is the hostname of the API service (e.g., `uat-external.eflglobal.com`):
+- `hostname`: is the hostname of the API service (e.g., `uat-external.eflglobal.com`).
 - `APIKey`: is the object with three values from `identifier.txt`, `decryption.key`, `encryption.key` files.
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 An example of the use of this class is demonstrated in `ews-client-node/demos/ajApiClientDemo` file.
 The [`further`](https://github.com/eflglobal/ews-client-node#applicant-journey-api-1) will describe in more detail how to use ajApiClient.
@@ -110,13 +110,13 @@ See the [`documentation`](https://developers.eflglobal.com/applicant-journey-api
 To send requests to the Scores API use the `scoresApiClient` class.
 The scoresApiClient constructor has two main properties:
 
-- `hostname`: is the hostname of the API service (e.g., `uat-external.eflglobal.com`):
+- `hostname`: is the hostname of the API service (e.g., `uat-external.eflglobal.com`).
 - `APIKey`: is the object with three values from `identifier.txt`, `decryption.key`, `encryption.key` files.
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 An example of the use of this class is demonstrated in `ews-client-node/demos/scoresApiClientDemo` file.
-The [`further`](https://github.com/eflglobal/ews-client-node#scores-api-2) will describe in more detail how to use scoresApiClient.
+The [`further`](https://github.com/eflglobal/ews-client-node#scores-api-1) will describe in more detail how to use scoresApiClient.
 
 #### Sending Scores API Requests
 
@@ -177,29 +177,29 @@ Where:
 - `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the relative path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 Examples:
 ```
-node demos/ajApiClientDemo.js uat-external.eflglobal.com ajKeysFile.zip
+node demos/ajApiClientDemo.js uat-external.eflglobal.com path/to/zip/archive/with/APIKeys
 ```
 or
 ```
-node demos/ajApiClientDemo.js uat-external.eflglobal.com ../ajKeysFolder
+node demos/ajApiClientDemo.js uat-external.eflglobal.com path/to/folder/with/APIKeys
 ```
 
 ##### Description of the demo
 
 The first, include file `ews-client-node/index` (general file of the library) and create a new instance class of AJ API Client.
 ```js
-var module = require('../index.js'),
+var module = require('path/to/file/index.js'),
     ajModule = new module.ajApiClient;
 ```
 
 If you copy only folder `ews-client-node/apiClient`, then include file `ews-client-node/apiClient/ajApiClient` and create a new instance class of AJ API Client.
 For example:
 ```js
-var module = require('../apiClient/ajApiClient.js'),
+var module = require('path/to/file/ajApiClient.js'),
     ajModule = new module;
 ```
 The next, call methods `init` for setting values of APIKey and hostname for an instance of ajApiClient class. 
@@ -214,17 +214,17 @@ Where:
 - `<hostname>` - is the value of hostname (from the command line when you run demo).
 - `<pathFolder>` - is the value of path to folder (zip file) with three files (`identifier.txt`, `decryption.key`, `encryption.key`) from the command line when the demo run.
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 You can manually write these values in these field without writing to the command line.
 
 Examples:
 ```js
-ajModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: '../ajKeysFile.zip'});
+ajModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: 'path/to/zip/archive/with/APIKeys'});
 ```
 or
 ```js
-ajModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: '../ajKeysFolder'});
+ajModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: 'path/to/folder/with/APIKeys'});
 ```
 
 Further, examples of method calls of the ajApiClient class are shown.
@@ -267,28 +267,28 @@ Where:
 - `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the relative path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 Examples:
 ```
-node demos/scoresApiClientDemo.js uat-external.eflglobal.com scoresKeysFile.zip
+node demos/scoresApiClientDemo.js uat-external.eflglobal.com path/to/zip/archive/with/APIKeys
 ```
 or
 ```
-node demos/scoresApiClientDemo.js uat-external.eflglobal.com ../scoresKeysFolder
+node demos/scoresApiClientDemo.js uat-external.eflglobal.com path/to/folder/with/APIKeys
 ```
 
 ##### Description of the demo
 
 The first, include file `ews-client-node/index` (general file of the library) and create a new instance class of Scores API Client.
 ```js
-var module = require('../index.js'),
+var module = require('path/to/file/index.js'),
     scoresModule = new module.scoresApiClient;
 ```
 If you copy only folder `ews-client-node/apiClient`, then include file `ews-client-node/apiClient/scoresApiClient` and create a new instance class of Scores API Client.
 For example:
 ```js
-var module = require('../apiClient/scoresApiClient.js'),
+var module = require('path/to/file/scoresApiClient.js'),
     scoresModule = new module;
 ```
 
@@ -304,17 +304,17 @@ Where:
 - `<hostname>` - is the value of hostname (from the command line when you run demo).
 - `<pathFolder>` - is the value of path to folder (zip file) with three files (`identifier.txt`, `decryption.key`, `encryption.key`) from the command line when the demo run.
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 You can manually write these values in these field without writing to the command line.
 
 Examples:
 ```js
-scoresModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: '../ajKeysFile.zip'});
+scoresModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: 'path/to/zip/archive/with/APIKeys'});
 ```
 or
 ```js
-scoresModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: '../ajKeysFolder'});
+scoresModule.init({hostname: 'uat-external.eflglobal.com', pathFolder: 'path/to/folder/with/APIKeys'});
 ```
 
 Further, examples of method calls of the scoresApiClient class are shown.
@@ -344,7 +344,7 @@ Where:
 - `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the relative path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 ##### Scores API
 
@@ -357,7 +357,7 @@ Where:
 - `<hostname>` is the hostname of the API service to send requests to (e.g., `uat-external.eflglobal.com`).
 - `<pathToApiKey>` is the relative path to the API key on the local filesystem (can be a ZIP archive or a folder containing the three files (`identifier.txt`, `encryption.key`, `decryption.key`)).
 
-The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp; contact EFL Support for more information.
+The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
 #### Unit tests
 ##### Applicant Journey API
