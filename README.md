@@ -160,7 +160,7 @@ See the [`documentation`](https://developers.eflglobal.com/scores-responses/) fo
 
 ## Additional Features
 ### Demos
-In `demos` directory you can find demo files (`demos/AjApiClientDemo.js`, `demos/ScoresApiClientDemo.js`). They show how to access methods of both client classes.
+In `demos` directory you can find demo files (`demos/ajApiClientDemo.js`, `demos/scoresApiClientDemo.js`). They show how to access methods of both client classes.
 
 #### Applicant Journey API
 
@@ -212,7 +212,7 @@ Argument:
 
 Where:
 - `<hostname>` - is the value of hostname (from the command line when you run demo).
-- `<pathFolder>` - is the value of path to folder (zip file) with three files (`identifier.txt`, `decryption.key`, `encryption.key`) from the command line when the demo run.
+- `<pathFolder>` - is the value of path to folder or zip file with three files (`identifier.txt`, `decryption.key`, `encryption.key`) from the command line when the demo run.
 
 The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
@@ -302,7 +302,7 @@ Argument:
 
 Where:
 - `<hostname>` - is the value of hostname (from the command line when you run demo).
-- `<pathFolder>` - is the value of path to folder (zip file) with three files (`identifier.txt`, `decryption.key`, `encryption.key`) from the command line when the demo run.
+- `<pathFolder>` - is the value of path to folder or zip file with three files (`identifier.txt`, `decryption.key`, `encryption.key`) from the command line when the demo run.
 
 The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
