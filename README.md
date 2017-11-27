@@ -239,14 +239,16 @@ let dataForStartSession = {
 
 ajModule.startSession(dataForStartSession)
     .then(response => {
-        if(response) {
-            console.log('Response calling startSession');
-            console.log('Application hash: ' + response.data.applicationHash);
-            console.log('Public Key: ' + response.data.publicKey);
-            console.log('UID: ' + response.data.uid);
-        }
+         console.log('Response calling startSession');
+         if(response.data.errors) {
+            console.log(response);
+         } else {
+             console.log('Application hash: ' + response.data.applicationHash);
+             console.log('Public Key: ' + response.data.publicKey);
+             console.log('UID: ' + response.data.uid);
+         }
     })
-    .then(() => {    
+    .then(() => {   
         // Call other methods of the ajApiClient.
         ...
     })
