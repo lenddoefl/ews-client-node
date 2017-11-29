@@ -118,7 +118,6 @@ See the [`documentation`](https://developers.eflglobal.com/applicant-journey-api
 Handling Errors for call aggregate:
 ```
 <nameInstanceClass>.aggregate(...).then(response => {
-            if(response) {
                 let responses = response.data.responses;
 
                 for(let item in responses) {
@@ -130,7 +129,6 @@ Handling Errors for call aggregate:
                         ...
                     }
                 }
-            }
         });
 ```
 
