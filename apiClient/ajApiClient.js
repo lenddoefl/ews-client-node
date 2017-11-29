@@ -108,6 +108,15 @@ module.exports = class AjApiClient {
             });
     }
 
+    aggregate(data) {
+        let endpoint = 'aggregate';
+        let url = this.generateURI(endpoint);
+
+        return request(url, this.auth, data).then(response => {
+            return response.data;
+        });
+    }
+
     init(data) {
         let enterData = ews.init(data);
         this.APIKey = enterData.APIKey;

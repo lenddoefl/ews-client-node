@@ -477,5 +477,132 @@ describe('Applicant Journey CLient', function () {
             });
         });
     });
+
+    describe('Call aggregate', () => {
+
+        it('Should come success response with status code 200, status message OK, correct data', done => {
+            let urlAggregate = ajModule.generateURI('aggregate'),
+                dataResponse = {
+                    data: {
+                        responses: {
+                            journeyEnd: {
+                                data: {},
+                                statusCode: 200,
+                                statusMessage: 'OK'
+                            },
+                            createAttachmentImage: {
+                                data: {
+                                    attachmentUid: '4621bdab7dfb4acc9c6ed7d1340239f5'
+                                },
+                                statusCode: 200,
+                                statusMessage: 'OK'
+                            },
+                            generalInfo: {
+                                data: {},
+                                statusCode: 200,
+                                statusMessage: 'OK'
+                            }
+                        }
+                    }
+                },
+                dataForCall = {
+                    requests: {
+                        generalInfo: {
+                            target: "finishStep",
+                            data: {
+                                uid: ajModule.getUid(),
+                                step: "generalInfo",
+                                sequence: 0,
+                                applicant: {},
+                                device: {
+                                    browser: null,
+                                    deviceId: null,
+                                    ipAddress: null,
+                                    os: {
+                                        type: null,
+                                        version: null
+                                    },
+                                    referrer: null,
+                                    viewport: {
+                                        height: null,
+                                        width: null
+                                    }
+                                },
+                                metas: {},
+                                observations: {},
+                                state: {},
+                            }
+                        },
+                        journeyEnd: {
+                            target: "finishStep",
+                            data: {
+                                uid: ajModule.getUid(),
+                                step: "journeyEnd",
+                                sequence: 0,
+                                applicant: {},
+                                device: {
+                                    browser: null,
+                                    deviceId: null,
+                                    ipAddress: null,
+                                    os: {
+                                        type: null,
+                                        version: null
+                                    },
+                                    referrer: null,
+                                    viewport: {
+                                        height: null,
+                                        width: null
+                                    }
+                                },
+                                metas: {},
+                                observations: {},
+                                state: {},
+                            }
+                        },
+                        createAttachmentImage: {
+                            target: "createAttachment",
+                            data: {
+                                uid: ajModule.getUid(),
+                                attachmentType: "photo",
+                                attachmentTypeVersion: "1.0",
+                                contentType: 'image/jpeg',
+                                inlineData: `/9j/4AAQSkZJRgABAQECqQKpAAD/2wBDAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgH
+                                     CAgJCg0LCQoMCggICw8LDA0ODg8OCQsQERAOEQ0ODg7/2wBDAQIDAwMDAwcEBAcOCQgJDg4ODg4O
+                                     Dg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg7/wAARCADIAMgDASIA
+                                     AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEB
+                                     AQEAAAAAAAAAAAAAAAAAAAgJ/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AnYC+
+                                     GX4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/2Q==`,
+                                name: 'test_image',
+                                sha1Hash: '878933c389d8a3c45e4bd38cd4fd0f61dc884a21',
+                                size: 541
+                            }
+                        }
+                    }
+                };
+
+            moxios.stubRequest(urlAggregate, {
+                response: {
+                    data: dataResponse,
+                    statusCode: 200,
+                    statusMessage: 'OK'
+                }
+            });
+
+            moxios.wait(function () {
+                ajModule.aggregate(dataForCall).then(response => {
+                    expect(response.statusCode).to.equal(200);
+                    expect(response.statusMessage).to.equal('OK');
+                    expect(response.data).to.be.an('object');
+                    expect(response.data).to.equal(dataResponse);
+
+                    done();
+                });
+            });
+        });
+    });
 });
 

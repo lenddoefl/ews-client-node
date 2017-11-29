@@ -18,10 +18,12 @@ To use requests to the APIs, you can copy the files from `ews-client-node/apiCli
 ## Usage
 ### Applicant Journey API
 To send requests to the Applicant Journey API use the `ajApiClient` class.
-The ajApiClient constructor has two main properties:
+The ajApiClient constructor has four main properties:
 
 - `hostname`: is the hostname of the API service (e.g., `uat-external.eflglobal.com`).
 - `APIKey`: is the object with three values from `identifier.txt`, `decryption.key`, `encryption.key` files.
+- `auth`: is the object with two values (`authToken` and `reqToken`) which are obtained from the login.
+- `uid`: is the value uid which are obtained from the startSession. You also can this value with help `getUid` function of ajApiClient after call startSession.
 
 The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 
@@ -82,6 +84,13 @@ Arguments:
 
 - `data`: contents of the `data` for call endpoint.
 
+##### `aggregate`
+Method connects to [`aggregate`](https://developers.eflglobal.com/applicant-journey-api/endpoints/aggregate.html) endpoint and returns JSON response.
+
+Arguments:
+
+- `data`: contents of the `data` for call endpoint.
+
 #### Handling Errors
 
 If an error occurs (e.g., non-200 response from the web service), the `errors` object will be returned.
@@ -106,12 +115,32 @@ Where:
 
 See the [`documentation`](https://developers.eflglobal.com/applicant-journey-api/gettingStarted/error-responses.html) for more details about AJ API Error Responses.
 
+Handling Errors for call aggregate:
+```
+<nameInstanceClass>.aggregate(...).then(response => {
+            if(response) {
+                let responses = response.data.responses;
+
+                for(let item in responses) {
+                    if(responses[item].data.errors) {
+                        // Handle error case.
+                        ...
+                    } else {
+                        // Handle success case.
+                        ...
+                    }
+                }
+            }
+        });
+```
+
 ### Scores API
 To send requests to the Scores API use the `scoresApiClient` class.
-The scoresApiClient constructor has two main properties:
+The scoresApiClient constructor has three main properties:
 
 - `hostname`: is the hostname of the API service (e.g., `uat-external.eflglobal.com`).
 - `APIKey`: is the object with three values from `identifier.txt`, `decryption.key`, `encryption.key` files.
+- `auth`: is the object with two values (`authToken` and `reqToken`) which are obtained from the login.
 
 The `identifier.txt`, `decryption.key` and `encryption.key` files can be found in the API Key archive downloaded from the EFL Webapp. Contact EFL Support for more information.
 

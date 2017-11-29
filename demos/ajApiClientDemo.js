@@ -19,7 +19,7 @@ ajModule.startSession(dataForStartSession)
     .then(response => {
          console.log('Response calling startSession');
          if(response.data.errors) {
-            console.log(response);
+             console.log(response);
          } else {
              console.log('Application hash: ' + response.data.applicationHash);
              console.log('Public Key: ' + response.data.publicKey);
@@ -50,9 +50,7 @@ ajModule.startSession(dataForStartSession)
             step: 'abGlobal'
         };
         ajModule.finishStep(dataForFinishStep).then(response => {
-            if(response) {
-                console.log('Response calling finishStep', response);
-            }
+            console.log('Response calling finishStep', response);
         });
 
         let dataForCreateAttachment = {
@@ -103,9 +101,7 @@ ajModule.startSession(dataForStartSession)
             size: 2217
         };
         ajModule.createAttachment(dataForCreateAttachment).then(response => {
-            if(response) {
-                console.log('Response calling createAttachment', response);
-            }
+            console.log('Response calling createAttachment', response);
         });
 
         let dataForGetApplication = {
@@ -129,9 +125,7 @@ ajModule.startSession(dataForStartSession)
             }
         };
         ajModule.getApplication(dataForGetApplication).then(response => {
-            if(response) {
-                console.log('Response calling getApplication', response);
-            }
+            console.log('Response calling getApplication', response);
         });
 
         let dataForFinishSession = {
@@ -139,18 +133,14 @@ ajModule.startSession(dataForStartSession)
         };
 
         ajModule.finishSession(dataForFinishSession).then(response => {
-            if(response) {
-                console.log('Response calling finishSession', response);
-            }
+            console.log('Response calling finishSession', response);
         });
 
         let dataForResumeSession = {
             applicant: {}
         };
         ajModule.resumeSession(dataForResumeSession).then(response => {
-            if(response) {
-                console.log('Response calling resumeSession', response);
-            }
+            console.log('Response calling resumeSession', response);
         });
 
         let dataForPrefetchApplications = {
@@ -159,8 +149,97 @@ ajModule.startSession(dataForStartSession)
             }
         };
         ajModule.prefetchApplications(dataForPrefetchApplications).then(response => {
-            if(response) {
-                console.log('Response calling prefetchApplications', response);
+            console.log('Response calling prefetchApplications', response);
+        });
+
+        let dataForAggregate = {
+            requests: {
+                generalInfo: {
+                    target: "finishStep",
+                    data: {
+                        uid: ajModule.getUid(),
+                        step: "generalInfo",
+                        sequence: 0,
+                        applicant: {},
+                        device: {
+                            browser: null,
+                            deviceId: null,
+                            ipAddress: null,
+                            os: {
+                                type: null,
+                                version: null
+                            },
+                            referrer: null,
+                            viewport: {
+                                height: null,
+                                width: null
+                            }
+                        },
+                        metas: {},
+                        observations: {},
+                        state: {},
+                    }
+                },
+                journeyEnd: {
+                    target: "finishStep",
+                    data: {
+                        uid: ajModule.getUid(),
+                        step: "journeyEnd",
+                        sequence: 0,
+                        applicant: {},
+                        device: {
+                            browser: null,
+                            deviceId: null,
+                            ipAddress: null,
+                            os: {
+                                type: null,
+                                version: null
+                            },
+                            referrer: null,
+                            viewport: {
+                                height: null,
+                                width: null
+                            }
+                        },
+                        metas: {},
+                        observations: {},
+                        state: {},
+                    }
+                },
+                createAttachmentImage: {
+                    target: "createAttachment",
+                    data: {
+                        uid: ajModule.getUid(),
+                        attachmentType: "photo",
+                        attachmentTypeVersion: "1.0",
+                        contentType: 'image/jpeg',
+                        inlineData: `/9j/4AAQSkZJRgABAQECqQKpAAD/2wBDAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgH
+                                     CAgJCg0LCQoMCggICw8LDA0ODg8OCQsQERAOEQ0ODg7/2wBDAQIDAwMDAwcEBAcOCQgJDg4ODg4O
+                                     Dg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg7/wAARCADIAMgDASIA
+                                     AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEB
+                                     AQEAAAAAAAAAAAAAAAAAAAgJ/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AnYC+
+                                     GX4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/2Q==`,
+                        name: 'test_image',
+                        sha1Hash: '878933c389d8a3c45e4bd38cd4fd0f61dc884a21',
+                        size: 541
+                    }
+                }
+            }
+        };
+        ajModule.aggregate(dataForAggregate).then(response => {
+            let responses = response.data.responses;
+            console.log('Response calling aggregate', response);
+
+            for(let item in responses) {
+                if(responses[item].data.errors) {
+                    console.log(`Response for ${item}: error`, responses[item].data.errors);
+                } else {
+                    console.log(`Response for ${item}`, responses[item]);
+                }
             }
         });
     });
