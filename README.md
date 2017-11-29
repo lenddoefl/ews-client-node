@@ -97,7 +97,7 @@ If an error occurs (e.g., non-200 response from the web service), the `errors` o
 
 In order to process the response it is necessary to write:
 
-```
+```js
 <nameInstanceClass>.<nameEndpoint>(...)
     .then(response => {
         if (response.data.errors) {
@@ -116,7 +116,7 @@ Where:
 See the [`documentation`](https://developers.eflglobal.com/applicant-journey-api/gettingStarted/error-responses.html) for more details about AJ API Error Responses.
 
 Handling Errors for call aggregate:
-```
+```js
 <nameInstanceClass>.aggregate(...).then(response => {
                 let responses = response.data.responses;
 
@@ -168,7 +168,7 @@ Arguments:
 
 In order to process the response it is necessary to write:
 
-```
+```js
 <nameInstanceClass>.<nameEndpoint>(...)
     .then(response => {
         // The API request was unsuccessful then value of `status` from `data` object will be `0`,
