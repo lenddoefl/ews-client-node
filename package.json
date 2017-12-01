@@ -1,6 +1,6 @@
 {
   "name": "ews-client-node",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Node.js client for calling EFL Web Service endpoints",
   "author": {
     "name": "Inga Kuznetsova",
